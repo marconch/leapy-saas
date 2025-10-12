@@ -26,14 +26,14 @@ const contactMethods = [
   {
     title: "商务合作",
     description: "渠道合作、战略联盟、投资洽谈",
-    contact: "business@leapy.example.com",
+    contact: "business@leapingtech.com",
     action: "商务邮件",
     icon: "🤝"
   },
   {
     title: "媒体咨询",
     description: "新闻采访、市场活动、品牌合作",
-    contact: "media@leapy.example.com",
+    contact: "media@leapingtech.com",
     action: "媒体邮件",
     icon: "📰"
   }

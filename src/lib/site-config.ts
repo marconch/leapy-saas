@@ -1,10 +1,10 @@
 export const siteConfig = {
   name: "领跃智能制造平台",
   description: "领先的工业 SaaS 解决方案，助力企业实现智能制造转型",
-  url: "https://leapy.example.com", // 占位域名，后续可替换
+  url: "https://www.leanleap.app", // 占位域名，后续可替换
   ogImage: "https://leapy.example.com/og.jpg",
   logo: "https://leapy.example.com/logo.png",
-  creator: "领跃科技",
+  creator: "上海逾迈信息科技有限公司",
   keywords: [
     "智能制造",
     "工业SaaS",
@@ -100,9 +100,9 @@ export const siteConfig = {
     ]
   },
   contact: {
-    email: "contact@leapy.example.com",
-    phone: "+86 400-123-4567",
-    address: "上海市浦东新区张江高科技园区"
+    email: "ch@leapingtech.com",
+    phone: "+8613916625509",
+    address: "上海市宁夏路201号"
   },
   social: {
     wechat: "#",

@@ -92,7 +92,7 @@ export default function Home() {
       <footer className="border-t bg-muted/50 px-6 py-12">
         <div className="mx-auto max-w-6xl text-center">
           <p className="text-sm text-muted-foreground">
-            © 2025 领跃智能制造平台. 保留所有权利.
+            © 2025 上海逾迈信息科技有限公司. 保留所有权利.
           </p>
         </div>
       </footer>
