@@ -115,19 +115,19 @@ export default function AboutPage() {
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">500+</div>
+                <div className="text-2xl font-bold text-primary">50+</div>
                 <div className="text-sm text-muted-foreground">服务客户</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">200+</div>
+                <div className="text-2xl font-bold text-primary">20+</div>
                 <div className="text-sm text-muted-foreground">团队成员</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">2000+</div>
+                <div className="text-2xl font-bold text-primary">50+</div>
                 <div className="text-sm text-muted-foreground">生产线</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">6年</div>
+                <div className="text-2xl font-bold text-primary">20年</div>
                 <div className="text-sm text-muted-foreground">行业经验</div>
               </div>
             </div>
