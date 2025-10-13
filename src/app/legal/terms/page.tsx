@@ -22,7 +22,7 @@ export default function TermsOfServicePage() {
             </CardHeader>
             <CardContent className="prose prose-gray dark:prose-invert max-w-none">
               <p>
-                欢迎使用领跃智能制造平台（以下简称"本服务"）。本服务由领跃科技有限公司（以下简称"我们"或"公司"）提供。
+                欢迎使用领跃智能制造平台（以下简称&ldquo;本服务&rdquo;）。本服务由领跃科技有限公司（以下简称&ldquo;我们&rdquo;或&ldquo;公司&rdquo;）提供。
                 通过访问或使用本服务，您同意受本服务条款约束。
               </p>
               <p>
@@ -171,7 +171,7 @@ export default function TermsOfServicePage() {
             </CardHeader>
             <CardContent className="prose prose-gray dark:prose-invert max-w-none">
               <p>
-                本服务按"现状"提供，不提供任何明示或暗示的保证。
+                本服务按&ldquo;现状&rdquo;提供，不提供任何明示或暗示的保证。
                 我们不保证服务将满足您的特定需求或完全无错误。
               </p>
               <p>

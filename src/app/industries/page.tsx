@@ -143,7 +143,7 @@ export default function IndustriesPage() {
 
                 <div className="bg-muted/50 p-4 rounded-lg">
                   <p className="text-sm text-muted-foreground italic">
-                    "{app.caseStudy}"
+                    &ldquo;{app.caseStudy}&rdquo;
                   </p>
                 </div>
               </CardContent>

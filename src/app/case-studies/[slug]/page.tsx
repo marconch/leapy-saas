@@ -146,7 +146,7 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
               </CardHeader>
               <CardContent>
                 <blockquote className="border-l-4 border-primary pl-4 italic text-lg">
-                  "{caseStudy.testimonial.quote}"
+                  &ldquo;{caseStudy.testimonial.quote}&rdquo;
                 </blockquote>
                 <div className="mt-4 text-sm text-muted-foreground">
                   — {caseStudy.testimonial.author}, {caseStudy.testimonial.role}

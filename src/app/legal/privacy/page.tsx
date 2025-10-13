@@ -22,7 +22,7 @@ export default function PrivacyPolicyPage() {
             </CardHeader>
             <CardContent className="prose prose-gray dark:prose-invert max-w-none">
               <p>
-                领跃科技（以下简称"我们"）非常重视用户的隐私保护。本隐私政策详细说明了我们在您使用领跃智能制造平台服务时，
+                领跃科技（以下简称&ldquo;我们&rdquo;）非常重视用户的隐私保护。本隐私政策详细说明了我们在您使用领跃智能制造平台服务时，
                 如何收集、使用、共享和保护您的个人信息。
               </p>
               <p>

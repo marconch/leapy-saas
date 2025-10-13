@@ -187,7 +187,7 @@ export default function CaseStudiesPage() {
                   {caseStudy.testimonial && (
                     <div className="mb-4 rounded-lg bg-muted/50 p-3">
                       <p className="text-xs italic text-muted-foreground">
-                        "{caseStudy.testimonial.quote}"
+                        &ldquo;{caseStudy.testimonial.quote}&rdquo;
                       </p>
                       <p className="mt-1 text-xs font-medium">
                         — {caseStudy.testimonial.author}, {caseStudy.testimonial.role}

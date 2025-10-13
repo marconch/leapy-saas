@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import type { CaseStudy } from "./case-studies"
 import { siteConfig } from "./site-config"
 
 interface PageMetadataProps {
@@ -57,8 +58,13 @@ export function generatePageMetadata({
   }
 }
 
-export function generateStructuredData(type: string, data: any) {
-  const baseData = {
+type StructuredData = Record<string, unknown>
+
+export function generateStructuredData<T extends StructuredData>(
+  type: string,
+  data: T,
+) {
+  const baseData: StructuredData = {
     "@context": "https://schema.org",
     "@type": type,
     ...data,
@@ -120,7 +126,7 @@ export function generateSoftwareApplicationLD() {
 }
 
 // 案例研究结构化数据
-export function generateCaseStudyLD(caseStudy: any) {
+export function generateCaseStudyLD(caseStudy: CaseStudy) {
   return generateStructuredData("Article", {
     headline: caseStudy.title,
     description: caseStudy.challenge,
