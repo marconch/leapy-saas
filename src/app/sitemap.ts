@@ -2,6 +2,9 @@ import { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/site-config'
 import { getAllCaseStudies } from '@/lib/case-studies'
 
+export const dynamic = 'force-static'
+export const revalidate = false
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url
 
