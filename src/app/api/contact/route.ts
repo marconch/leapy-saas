@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import Database from "better-sqlite3"
 import path from "node:path"
 import fs from "node:fs"
-import { sendLeadEmail } from "@/lib/mailer"
+import { sendLeadEmail, sendCustomerAckEmail } from "@/lib/mailer"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -81,10 +81,13 @@ export async function POST(req: NextRequest) {
         user_agent: req.headers.get("user-agent") ?? null,
       })
     const id = Number(info.lastInsertRowid)
-    // Best-effort notification email — a failure here never blocks the submission.
-    await sendLeadEmail({ id, name, phone, email, company, type, message, created_at }).catch((e) =>
-      console.error("[contact] notification email failed:", e)
-    )
+    // Best-effort emails — failures here never block the submission (lead is saved).
+    // Staff get a notification; the customer gets an acknowledgement reply.
+    const lead = { id, name, phone, email, company, type, message, created_at }
+    await Promise.all([
+      sendLeadEmail(lead).catch((e) => console.error("[contact] notification email failed:", e)),
+      sendCustomerAckEmail(lead).catch((e) => console.error("[contact] customer ack email failed:", e)),
+    ])
     return NextResponse.json({ ok: true, id })
   } catch (e) {
     console.error("[contact] save failed:", e)
