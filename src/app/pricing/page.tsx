@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
   title: "价格方案",
@@ -12,47 +13,50 @@ const plans = [
     name: "标准版",
     price: "¥19,800",
     period: "/月",
-    description: "适合中小型制造企业的基础数字化需求",
+    description: "适合中小型制造企业的协同管理基础需求",
     features: [
-      "最多支持3条生产线",
-      "基础MES功能",
+      "最多支持 20 个用户账号",
+      "供应链管理(采购/销售/库存)",
       "标准报表模板",
       "邮件技术支持",
       "基础培训服务"
     ],
     buttonText: "开始试用",
+    buttonHref: siteConfig.loginUrl,
     popular: false
   },
   {
     name: "专业版",
     price: "¥39,800",
     period: "/月",
-    description: "适合中型制造企业的全面数字化管理",
+    description: "适合中型制造企业的全面协同管理",
     features: [
-      "最多支持10条生产线",
-      "完整MES+设备管理",
-      "自定义报表和仪表板",
+      "最多支持 100 个用户账号",
+      "供应链 + 生产制造 + 财务管理",
+      "自定义报表和经营看板",
       "电话+在线技术支持",
       "现场培训服务",
       "API集成支持"
     ],
     buttonText: "立即开始",
+    buttonHref: siteConfig.loginUrl,
     popular: true
   },
   {
     name: "企业版",
     price: "定制报价",
     period: "",
-    description: "大型制造企业的全方位数字化转型解决方案",
+    description: "大型制造集团的多租户协同制造解决方案",
     features: [
-      "无限制生产线数量",
-      "全功能模块组合",
+      "无限用户与多租户/多组织",
+      "全功能模块组合(含成本/投资/工作流)",
       "定制化开发服务",
       "7×24小时专属支持",
       "专业实施团队",
       "私有化部署选项"
     ],
     buttonText: "联系销售",
+    buttonHref: "/contact",
     popular: false
   }
 ]
@@ -118,8 +122,9 @@ export default function PricingPage() {
               <Button
                 className="w-full"
                 variant={plan.popular ? "default" : "outline"}
+                asChild
               >
-                {plan.buttonText}
+                <a href={plan.buttonHref}>{plan.buttonText}</a>
               </Button>
             </CardContent>
           </Card>
@@ -143,13 +148,13 @@ export default function PricingPage() {
                 </thead>
                 <tbody className="text-sm">
                   {[
-                    ["生产管理", "✓", "✓", "✓"],
-                    ["设备管理", "基础", "✓", "✓"],
-                    ["质量管理", "基础", "✓", "✓"],
-                    ["数据分析", "标准报表", "自定义", "高级分析"],
+                    ["供应链管理(采购/销售/库存)", "✓", "✓", "✓"],
+                    ["生产制造(工单/BOM/工艺/质检)", "基础", "✓", "✓"],
+                    ["财务与成本管理", "✗", "✓", "✓"],
+                    ["报表中心 / 经营分析", "标准报表", "自定义", "高级分析"],
+                    ["工作流审批", "基础", "✓", "✓"],
                     ["API集成", "✗", "✓", "✓"],
-                    ["移动端", "只读", "✓", "✓"],
-                    ["多工厂支持", "✗", "✗", "✓"],
+                    ["多租户 / 多组织", "✗", "✗", "✓"],
                     ["私有化部署", "✗", "✗", "✓"]
                   ].map((row, index) => (
                     <tr key={index} className="border-b">
@@ -190,8 +195,12 @@ export default function PricingPage() {
           立即开始30天免费试用，或联系我们获取定制方案
         </p>
         <div className="mt-6 flex justify-center gap-4">
-          <Button size="lg">免费试用</Button>
-          <Button size="lg" variant="outline">联系销售</Button>
+          <Button size="lg" asChild>
+            <a href={siteConfig.loginUrl}>免费试用</a>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <a href="/contact">联系销售</a>
+          </Button>
         </div>
       </div>
     </div>

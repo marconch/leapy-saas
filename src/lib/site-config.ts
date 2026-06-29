@@ -1,39 +1,44 @@
 export const siteConfig = {
-  name: "领跃智能制造平台",
-  description: "领先的工业 SaaS 解决方案，助力企业实现智能制造转型",
+  name: "领跃协同制造管理系统",
+  description:
+    "领跃（LeanLeap）协同制造管理云平台，打通采购、销售、生产、库存、财务、成本到经营分析的全业务链路，助力制造企业实现一体化数字化经营。",
   url: "https://www.leanleap.app", // 占位域名，后续可替换
-  ogImage: "https://leapy.example.com/og.jpg",
-  logo: "https://leapy.example.com/logo.png",
+  loginUrl: "https://leanleap.app/login", // 产品登录入口（领跃产品主域）
+  ogImage: "https://www.leanleap.app/logo.svg",
+  logo: "/logo.svg",
   creator: "上海逾迈信息科技有限公司",
   keywords: [
-    "智能制造",
-    "工业SaaS",
-    "数字化转型",
-    "制造执行系统",
-    "工业物联网",
-    "智慧工厂"
+    "协同制造管理",
+    "制造业ERP",
+    "供应链管理",
+    "生产管理",
+    "财务管理",
+    "成本核算",
+    "多租户SaaS",
+    "工作流审批",
+    "数字化经营"
   ],
   navigation: {
     main: [
       {
         title: "产品",
         href: "/products",
-        description: "了解我们的智能制造产品"
+        description: "协同制造管理的核心业务模块"
       },
       {
         title: "解决方案",
         href: "/solutions",
-        description: "针对不同场景的解决方案"
+        description: "面向不同制造场景的解决方案"
       },
       {
         title: "行业应用",
         href: "/industries",
-        description: "各行业的应用案例"
+        description: "各制造行业的应用案例"
       },
       {
         title: "价格",
         href: "/pricing",
-        description: "灵活的定价方案"
+        description: "灵活的多租户订阅方案"
       },
       {
         title: "案例研究",
@@ -60,10 +65,10 @@ export const siteConfig = {
       {
         title: "产品",
         items: [
-          { title: "制造执行系统", href: "/products#mes" },
-          { title: "设备管理", href: "/products#equipment" },
-          { title: "质量管理", href: "/products#quality" },
-          { title: "数据分析", href: "/products#analytics" }
+          { title: "供应链管理", href: "/products#supply-chain" },
+          { title: "生产制造", href: "/products#manufacturing" },
+          { title: "财务管理", href: "/products#finance" },
+          { title: "经营报表", href: "/products#analytics" }
         ]
       },
       {

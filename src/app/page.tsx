@@ -11,34 +11,34 @@ import {
 import { BarList } from "@/components/BarList"
 
 const kpiData = [
-  { name: "生产效率", value: 94, color: "emerald" },
-  { name: "设备利用率", value: 87, color: "blue" },
-  { name: "质量合格率", value: 99, color: "violet" },
-  { name: "库存周转率", value: 78, color: "amber" },
-  { name: "订单准时率", value: 96, color: "rose" },
+  { name: "订单准时交付率", value: 96, color: "emerald" },
+  { name: "库存周转率", value: 82, color: "blue" },
+  { name: "应收回款率", value: 92, color: "violet" },
+  { name: "月度结账及时率", value: 95, color: "amber" },
+  { name: "单据审批时效", value: 88, color: "rose" },
 ]
 
 const heroHighlights = [
-  "遵循 ISA-95 国际标准",
-  "云服务架构快速上线",
-  "制造过程全程可视化",
+  "多租户 SaaS 快速上线",
+  "采购到财务全链路打通",
+  "工作流审批灵活可配",
 ]
 
 const platformHighlights = [
-  "实时数据监控与分析",
-  "智能预测性维护",
-  "全流程质量管控",
-  "精益生产优化",
-  "灵活的集成能力",
+  "全业务链路在线协同",
+  "多租户数据隔离与权限管控",
+  "可配置的工作流审批引擎",
+  "实时经营报表与成本分析",
+  "灵活的开放集成能力",
 ]
 
 const services = [
   {
-    title: "leanleap智能网络协同制造系统",
-    description: "覆盖研发、计划、生产到交付的全链路协同。",
+    title: "领跃协同制造管理系统",
+    description: "覆盖采购、销售、生产、库存、财务、成本的全链路业务协同。",
     highlights: [
-      "缩短产品生命周期，降低库存积压",
-      "减少生产成本，提高跨部门协同效率",
+      "打通供应链与财务，降低库存积压与对账差错",
+      "跨部门在线协同，提升单据流转与履约效率",
     ],
   },
   {
@@ -47,11 +47,11 @@ const services = [
     highlights: ["以客户为中心，赋能企业数字化转型"],
   },
   {
-    title: "数字化转型解决方案",
-    description: "结合行业经验提供端到端的业务中台与智能分析。",
+    title: "一体化数字化经营方案",
+    description: "结合制造行业经验，提供端到端的业务中台与经营分析。",
     highlights: [
-      "项目管理、基金业务、云服务、IoT、ERP 等模块化组合",
-      "支持大数据与商业智能闭环",
+      "供应链、生产制造、财务成本、投资管理、报表分析模块化组合",
+      "支持多租户 SaaS 与经营数据闭环",
     ],
   },
 ]
@@ -75,14 +75,14 @@ export default function Home() {
         />
         <div className="mx-auto max-w-5xl text-center">
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-            智能制造平台
+            协同制造管理云平台
           </span>
           <h1 className="mt-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            领跃云端工厂 · 数字智造
+            一体化协同制造管理，让经营尽在掌握
           </h1>
           <p className="mt-6 text-lg text-muted-foreground sm:text-xl">
-            借助 leanleap 智能网络协同制造系统，将研发、计划、生产、服务紧密连接，
-            打造以数据驱动的敏捷工厂，帮助企业在复杂制造场景下持续提升核心竞争力。
+            借助领跃（LeanLeap）协同制造管理系统，将采购、销售、生产、库存、财务、成本紧密连接，
+            构建以数据驱动的一体化经营平台，帮助制造企业持续提升协同效率与经营质量。
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Button size="lg">预约演示</Button>
@@ -114,7 +114,7 @@ export default function Home() {
               产品与服务
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              沿袭原有业务最佳实践，提供从方案咨询到落地运维的一体化服务体系，
+              沿袭制造行业管理最佳实践，提供从方案咨询到落地运维的一体化服务体系，
               帮助制造企业快速完成数字化升级。
             </p>
           </div>
@@ -147,18 +147,18 @@ export default function Home() {
             <div>
               <div className="max-w-2xl">
                 <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                  实时制造指标
+                  实时经营指标
                 </h2>
                 <p className="mt-4 text-lg text-muted-foreground">
-                  将计划、执行、质量与成本指标统一到同一数据底座，
-                  以数据驱动的方式持续优化生产过程。
+                  将采购、生产、库存、财务与成本指标统一到同一数据底座，
+                  以数据驱动的方式持续优化经营决策。
                 </p>
               </div>
               <Card className="mt-8">
                 <CardHeader>
                   <CardTitle>核心 KPI 指标</CardTitle>
                   <CardDescription>
-                    结合历史数据与实时采集，形成面向经营的指标体系。
+                    结合业务单据与实时数据，形成面向经营的指标体系。
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -170,7 +170,7 @@ export default function Home() {
               <CardHeader>
                 <CardTitle>平台优势</CardTitle>
                 <CardDescription>
-                  基于旧版解决方案沉淀的经验，全面覆盖生产全景。
+                  沉淀制造企业管理最佳实践，全面覆盖经营全景。
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -191,10 +191,10 @@ export default function Home() {
           <Card>
             <CardHeader className="text-center sm:text-left">
               <CardTitle className="text-2xl">
-                开启您的智能制造升级
+                开启您的协同制造管理升级
               </CardTitle>
               <CardDescription>
-                延续旧版官网的联系方式，我们的咨询顾问将根据您的行业特点提供定制化演示。
+                我们的咨询顾问将根据您的行业特点，提供定制化演示与方案咨询。
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">

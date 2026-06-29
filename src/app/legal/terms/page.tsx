@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata: Metadata = {
   title: "服务条款",
-  description: "领跃智能制造平台的服务条款，规定了使用我们服务的权利、义务和限制条件。",
+  description: "领跃协同制造管理云平台的服务条款，规定了使用我们服务的权利、义务和限制条件。",
 }
 
 export default function TermsOfServicePage() {
@@ -22,7 +22,7 @@ export default function TermsOfServicePage() {
             </CardHeader>
             <CardContent className="prose prose-gray dark:prose-invert max-w-none">
               <p>
-                欢迎使用领跃智能制造平台（以下简称&ldquo;本服务&rdquo;）。本服务由领跃科技有限公司（以下简称&ldquo;我们&rdquo;或&ldquo;公司&rdquo;）提供。
+                欢迎使用领跃协同制造管理云平台（以下简称&ldquo;本服务&rdquo;）。本服务由上海逾迈信息科技有限公司（以下简称&ldquo;我们&rdquo;或&ldquo;公司&rdquo;）提供。
                 通过访问或使用本服务，您同意受本服务条款约束。
               </p>
               <p>
@@ -37,13 +37,13 @@ export default function TermsOfServicePage() {
               <CardTitle>2. 服务描述</CardTitle>
             </CardHeader>
             <CardContent className="prose prose-gray dark:prose-invert max-w-none">
-              <p>领跃智能制造平台是一个为制造企业提供数字化转型解决方案的SaaS平台，主要功能包括：</p>
+              <p>领跃协同制造管理云平台是一个为制造企业提供数字化协同管理的多租户 SaaS 平台，主要功能包括：</p>
               <ul>
-                <li>制造执行系统（MES）</li>
-                <li>设备管理和监控</li>
-                <li>质量管理系统</li>
-                <li>数据分析和报表</li>
-                <li>其他相关的制造管理功能</li>
+                <li>供应链管理（采购、销售、库存/WMS）</li>
+                <li>生产制造（生产工单、BOM、工艺路线、质检）</li>
+                <li>财务与成本管理（应收应付、对账、凭证、成本核算）</li>
+                <li>报表中心与经营分析</li>
+                <li>工作流审批、多租户与权限管理等相关功能</li>
               </ul>
               <p>
                 我们保留随时修改、暂停或终止任何服务功能的权利，恕不另行通知。
@@ -259,8 +259,8 @@ export default function TermsOfServicePage() {
             <CardContent className="prose prose-gray dark:prose-invert max-w-none">
               <p>如果您对本服务条款有任何疑问，请联系我们：</p>
               <ul>
-                <li>邮箱：legal@leapy.example.com</li>
-                <li>电话：400-123-4567</li>
+                <li>邮箱：legal@leapingtech.com</li>
+                <li>电话：021-62095557</li>
                 <li>地址：上海市浦东新区张江高科技园区</li>
               </ul>
             </CardContent>

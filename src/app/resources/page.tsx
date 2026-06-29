@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 
 export const metadata: Metadata = {
   title: "资源中心",
-  description: "领跃智能制造平台的技术文档、API参考、最佳实践指南和培训资源，助力用户更好地使用和部署系统。",
+  description: "领跃协同制造管理系统（LeanLeap）的技术文档、API参考、最佳实践指南和培训资源，助力用户更好地使用和部署系统。",
 }
 
 const resourceCategories = [
@@ -35,10 +35,10 @@ const resourceCategories = [
     description: "行业经验分享和优化建议",
     icon: "💡",
     items: [
-      { title: "生产管理最佳实践", description: "提升生产效率的方法", type: "指南" },
-      { title: "质量管控策略", description: "质量管理体系建设", type: "指南" },
-      { title: "设备维护规范", description: "预测性维护实施方案", type: "指南" },
-      { title: "数据分析应用", description: "制造数据价值挖掘", type: "指南" }
+      { title: "供应链协同最佳实践", description: "采购、销售与库存高效协同", type: "指南" },
+      { title: "生产工单管理实践", description: "工单、BOM 与工艺路线落地", type: "指南" },
+      { title: "财务对账与月结规范", description: "应收应付与成本核算实务", type: "指南" },
+      { title: "经营数据分析应用", description: "BI 报表与经营看板价值挖掘", type: "指南" }
     ]
   },
   {
@@ -57,7 +57,7 @@ const resourceCategories = [
 const downloadResources = [
   {
     title: "产品白皮书",
-    description: "全面了解智能制造解决方案",
+    description: "全面了解协同制造管理解决方案",
     size: "2.3 MB",
     format: "PDF"
   },
@@ -88,7 +88,7 @@ export default function ResourcesPage() {
       <div className="text-center">
         <h1 className="text-4xl font-bold tracking-tight">资源中心</h1>
         <p className="mt-4 text-xl text-muted-foreground max-w-3xl mx-auto">
-          丰富的技术资源和学习材料，助力您更好地使用和部署智能制造平台
+          丰富的技术资源和学习材料，助力您更好地使用和部署协同制造管理平台
         </p>
       </div>
 
@@ -194,13 +194,13 @@ export default function ResourcesPage() {
               <div className="space-y-2">
                 <div className="text-2xl">📧</div>
                 <h3 className="font-semibold">邮件支持</h3>
-                <p className="text-sm text-muted-foreground">support@leapy.example.com</p>
+                <p className="text-sm text-muted-foreground">support@leapingtech.com</p>
                 <Button variant="outline" size="sm">发送邮件</Button>
               </div>
               <div className="space-y-2">
                 <div className="text-2xl">📱</div>
                 <h3 className="font-semibold">电话支持</h3>
-                <p className="text-sm text-muted-foreground">400-123-4567</p>
+                <p className="text-sm text-muted-foreground">021-62095557</p>
                 <Button variant="outline" size="sm">立即致电</Button>
               </div>
             </div>

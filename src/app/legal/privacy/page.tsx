@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata: Metadata = {
   title: "隐私政策",
-  description: "领跃智能制造平台的隐私政策，详细说明我们如何收集、使用和保护您的个人信息。",
+  description: "领跃协同制造管理云平台的隐私政策，详细说明我们如何收集、使用和保护您的个人信息。",
 }
 
 export default function PrivacyPolicyPage() {
@@ -22,7 +22,7 @@ export default function PrivacyPolicyPage() {
             </CardHeader>
             <CardContent className="prose prose-gray dark:prose-invert max-w-none">
               <p>
-                领跃科技（以下简称&ldquo;我们&rdquo;）非常重视用户的隐私保护。本隐私政策详细说明了我们在您使用领跃智能制造平台服务时，
+                领跃科技（以下简称&ldquo;我们&rdquo;）非常重视用户的隐私保护。本隐私政策详细说明了我们在您使用领跃协同制造管理云平台服务时，
                 如何收集、使用、共享和保护您的个人信息。
               </p>
               <p>
@@ -41,7 +41,7 @@ export default function PrivacyPolicyPage() {
               <ul>
                 <li>账户注册信息：姓名、邮箱地址、电话号码、公司信息</li>
                 <li>联系信息：通过表单、邮件或电话提供的联系详情</li>
-                <li>业务信息：生产数据、设备信息、工艺参数等</li>
+                <li>业务信息：采购、销售、库存、生产工单、财务等业务数据，以及单据、工艺路线等信息</li>
                 <li>支付信息：订单和付款相关信息</li>
               </ul>
 
@@ -175,8 +175,8 @@ export default function PrivacyPolicyPage() {
             <CardContent className="prose prose-gray dark:prose-invert max-w-none">
               <p>如果您对本隐私政策有任何疑问或需要行使您的权利，请通过以下方式联系我们：</p>
               <ul>
-                <li>邮箱：privacy@leapy.example.com</li>
-                <li>电话：400-123-4567</li>
+                <li>邮箱：privacy@leapingtech.com</li>
+                <li>电话：021-62095557</li>
                 <li>地址：上海市浦东新区张江高科技园区</li>
               </ul>
             </CardContent>

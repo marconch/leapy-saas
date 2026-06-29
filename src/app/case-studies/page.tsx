@@ -12,7 +12,7 @@ import { getAllCaseStudies } from "@/lib/case-studies"
 
 export const metadata: Metadata = {
   title: "客户案例",
-  description: "领跃智能制造平台的成功案例分享，展示在汽车、电子、机械、化工等行业的数字化转型成果。",
+  description: "领跃 LeanLeap 协同制造管理云平台的成功案例分享，展示在汽车、电子、机械、化工等行业的数字化转型成果。",
 }
 
 const industries = [
@@ -34,9 +34,9 @@ const customerLogos = [
 
 const customers = [
   {
-    title: "航天某研究所电装车间 MES 系统",
+    title: "航天某研究所电装车间生产协同系统",
     description:
-      "建立了车间现场管理、大屏监控、质量追溯的车间管理系统。",
+      "基于生产制造云，建立工单现场管理、生产看板与质检追溯的车间协同体系。",
     result: "计划完成率提升，关键生产过程透明可控。",
   },
   {
@@ -46,15 +46,15 @@ const customers = [
     result: "统一资产视图，显著提升资源使用效率。",
   },
   {
-    title: "航天某研究所热电池组车间 MES 系统",
+    title: "航天某研究所热电池组车间生产协同系统",
     description:
-      "构建生产过程管理与质量数据采集体系，实现全程追溯。",
+      "构建生产工单、工艺路线与质检数据采集体系，实现全程追溯。",
     result: "生产资源利用率提高，质量问题处理更及时。",
   },
   {
-    title: "航天某装备制造公司 MES 平台",
+    title: "航天某装备制造公司生产协同管理平台",
     description:
-      "覆盖地装、电源、电机事业部，实现跨事业部的计划协同。",
+      "覆盖地装、电源、电机事业部，打通生产工单与供应链的跨事业部协同。",
     result: "优化生产排程，提升交付质量并降低成本。",
   },
   {

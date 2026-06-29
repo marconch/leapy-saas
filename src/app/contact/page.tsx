@@ -1,11 +1,12 @@
 import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ContactForm } from "@/components/ContactForm"
 import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
   title: "联系我们",
-  description: "联系领跃科技团队，获取专业的智能制造解决方案咨询和技术支持。多种联系方式，快速响应您的需求。",
+  description: "联系领跃 LeanLeap 团队，获取专业的协同制造管理云平台咨询和技术支持。多种联系方式，快速响应您的需求。",
 }
 
 const contactMethods = [
@@ -44,19 +45,19 @@ const offices = [
     city: "上海总部",
     address: "上海市浦东新区张江高科技园区",
     phone: "+86 21-1234-5678",
-    email: "shanghai@leapy.example.com"
+    email: "shanghai@leapingtech.com"
   },
   {
     city: "北京分公司",
     address: "北京市海淀区中关村科技园",
     phone: "+86 10-1234-5678",
-    email: "beijing@leapy.example.com"
+    email: "beijing@leapingtech.com"
   },
   {
     city: "深圳分公司",
     address: "深圳市南山区高新技术产业园",
     phone: "+86 755-1234-5678",
-    email: "shenzhen@leapy.example.com"
+    email: "shenzhen@leapingtech.com"
   }
 ]
 
@@ -97,62 +98,7 @@ export default function ContactPage() {
             <CardTitle>在线咨询</CardTitle>
           </CardHeader>
           <CardContent>
-            <form className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <label className="text-sm font-medium">姓名 *</label>
-                  <input
-                    type="text"
-                    className="w-full mt-1 px-3 py-2 border border-input rounded-md bg-background text-foreground"
-                    placeholder="请输入您的姓名"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium">电话 *</label>
-                  <input
-                    type="tel"
-                    className="w-full mt-1 px-3 py-2 border border-input rounded-md bg-background text-foreground"
-                    placeholder="请输入联系电话"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="text-sm font-medium">邮箱 *</label>
-                <input
-                  type="email"
-                  className="w-full mt-1 px-3 py-2 border border-input rounded-md bg-background text-foreground"
-                  placeholder="请输入邮箱地址"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium">公司名称</label>
-                <input
-                  type="text"
-                  className="w-full mt-1 px-3 py-2 border border-input rounded-md bg-background text-foreground"
-                  placeholder="请输入公司名称"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium">咨询类型</label>
-                <select className="w-full mt-1 px-3 py-2 border border-input rounded-md bg-background text-foreground">
-                  <option value="">请选择咨询类型</option>
-                  <option value="product">产品咨询</option>
-                  <option value="solution">解决方案</option>
-                  <option value="pricing">价格咨询</option>
-                  <option value="support">技术支持</option>
-                  <option value="partnership">合作洽谈</option>
-                </select>
-              </div>
-              <div>
-                <label className="text-sm font-medium">详细描述</label>
-                <textarea
-                  rows={4}
-                  className="w-full mt-1 px-3 py-2 border border-input rounded-md bg-background text-foreground"
-                  placeholder="请详细描述您的需求或问题"
-                />
-              </div>
-              <Button className="w-full">提交咨询</Button>
-            </form>
+            <ContactForm />
           </CardContent>
         </Card>
 
@@ -242,7 +188,9 @@ export default function ContactPage() {
           免费试用30天，体验完整的产品功能
         </p>
         <div className="mt-6 flex justify-center gap-4">
-          <Button size="lg">免费试用</Button>
+          <Button size="lg" asChild>
+            <a href={siteConfig.loginUrl}>免费试用</a>
+          </Button>
           <Button size="lg" variant="outline">预约演示</Button>
         </div>
       </div>

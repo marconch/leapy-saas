@@ -12,7 +12,7 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-4">
             <Image
-              src="/logo.png"
+              src="/logo.svg"
               alt={siteConfig.name}
               width={40}
               height={40}
@@ -31,7 +31,7 @@ export function Header() {
               <Link href="/contact">联系销售</Link>
             </Button>
             <Button size="sm" asChild>
-              <Link href="/contact">免费试用</Link>
+              <a href={siteConfig.loginUrl}>免费试用</a>
             </Button>
           </div>
 

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata: Metadata = {
   title: "关于我们",
-  description: "了解领跃科技团队，我们致力于为制造企业提供领先的数字化转型解决方案，推动中国制造业的智能化升级。",
+  description: "了解领跃团队，我们致力于为制造企业提供领先的协同制造管理云平台，助力企业实现供应链、生产、财务一体化协同管理。",
 }
 
 const team = [
@@ -59,7 +59,7 @@ const values = [
 
 const milestones = [
   { year: "2018", event: "公司成立，获得天使轮投资" },
-  { year: "2019", event: "发布第一版MES产品，服务首批客户" },
+  { year: "2019", event: "发布第一版协同制造管理云平台，服务首批客户" },
   { year: "2020", event: "完成A轮融资，团队扩展到50人" },
   { year: "2021", event: "服务客户突破100家，产品功能全面升级" },
   { year: "2022", event: "获得行业权威认证，开拓海外市场" },
@@ -74,7 +74,7 @@ export default function AboutPage() {
       <div className="text-center">
         <h1 className="text-4xl font-bold tracking-tight">关于领跃科技</h1>
         <p className="mt-4 text-xl text-muted-foreground max-w-3xl mx-auto">
-          专注制造业数字化转型，致力于成为中国领先的工业软件服务商
+          专注制造企业协同管理，致力于成为领先的协同制造管理云平台服务商
         </p>
       </div>
 
@@ -92,13 +92,13 @@ export default function AboutPage() {
               <div>
                 <h3 className="font-semibold mb-2">使命</h3>
                 <p className="text-muted-foreground text-sm">
-                  通过创新的数字化技术，助力中国制造企业实现智能化转型，提升全球竞争力
+                  通过一体化的协同管理平台，助力中国制造企业打通供应链、生产与财务，提升全球竞争力
                 </p>
               </div>
               <div>
                 <h3 className="font-semibold mb-2">愿景</h3>
                 <p className="text-muted-foreground text-sm">
-                  成为中国制造业数字化转型的领导者，推动制造业高质量发展
+                  成为中国制造企业协同管理云平台的领导者，推动制造业高质量发展
                 </p>
               </div>
             </div>
@@ -123,8 +123,8 @@ export default function AboutPage() {
                 <div className="text-sm text-muted-foreground">团队成员</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">50+</div>
-                <div className="text-sm text-muted-foreground">生产线</div>
+                <div className="text-2xl font-bold text-primary">8大</div>
+                <div className="text-sm text-muted-foreground">核心模块</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">20年</div>

@@ -4,36 +4,36 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export const metadata: Metadata = {
   title: "解决方案",
-  description: "针对不同行业和场景的智能制造解决方案，满足汽车、电子、机械、化工等行业的数字化转型需求。",
+  description: "针对不同行业和场景的协同制造管理解决方案，覆盖供应链、生产制造、财务与成本，满足汽车、电子、机械、化工等行业的数字化转型需求。",
 }
 
 const solutions = [
   {
     id: "automotive",
     name: "汽车制造解决方案",
-    description: "专为汽车制造行业设计的数字化解决方案，支持复杂的装配工艺和严格的质量要求",
-    benefits: ["提升装配效率30%", "降低缺陷率85%", "实现全流程追溯", "优化供应链协同"],
+    description: "专为汽车制造行业设计的协同制造管理方案，打通采购、生产工单与质检，支撑复杂装配工艺与严格的质量要求",
+    benefits: ["采购到交付全流程协同", "生产工单与 BOM 精细管理", "批次全程可追溯", "供应链与质检联动"],
     image: "🚗"
   },
   {
     id: "electronics",
     name: "电子制造解决方案",
-    description: "适用于电子产品制造的精密生产管理，支持高度自动化的生产线",
-    benefits: ["提高产线柔性", "精确库存管理", "实时质量监控", "快速产品切换"],
+    description: "适用于电子产品制造的精细化协同管理，支撑多品类、多批次的订单与库存运营",
+    benefits: ["多批次精细库存管理", "销售订单快速响应", "工序质检全程把控", "WMS 移库与盘点高效"],
     image: "📱"
   },
   {
     id: "machinery",
     name: "机械制造解决方案",
-    description: "面向机械制造企业的生产管理解决方案，优化复杂工艺流程",
-    benefits: ["工艺标准化", "设备综合效率提升", "减少在制品积压", "交期准确性提升"],
+    description: "面向机械制造企业的协同制造管理方案，优化复杂工艺路线与工单排程",
+    benefits: ["工艺路线标准化", "工单进度透明可控", "减少在制品积压", "交期准确性提升"],
     image: "⚙️"
   },
   {
     id: "chemical",
     name: "化工制造解决方案",
-    description: "专注化工行业的安全生产和过程控制，确保生产安全和产品质量",
-    benefits: ["安全风险管控", "工艺参数优化", "能耗成本降低", "环保合规管理"],
+    description: "面向化工行业的批次化生产与成本核算管理，保障质量合规与经营透明",
+    benefits: ["批次质检与合规管理", "成本核算与月结", "应收应付对账清晰", "采购入库精细管控"],
     image: "🧪"
   }
 ]
@@ -45,7 +45,7 @@ export default function SolutionsPage() {
       <div className="text-center">
         <h1 className="text-4xl font-bold tracking-tight">行业解决方案</h1>
         <p className="mt-4 text-xl text-muted-foreground max-w-3xl mx-auto">
-          基于深度行业理解，为不同制造领域提供针对性的数字化转型解决方案
+          基于深度行业理解，为不同制造领域提供针对性的协同制造管理解决方案
         </p>
       </div>
 

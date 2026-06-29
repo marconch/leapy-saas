@@ -11,7 +11,7 @@ export function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center space-x-4">
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt={siteConfig.name}
                 width={36}
                 height={36}
