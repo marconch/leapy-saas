@@ -107,7 +107,7 @@ export const siteConfig = {
   contact: {
     email: "ch@leapingtech.com",
     phone: "+8613916625509",
-    address: "上海市宁夏路201号"
+    address: "上海市普陀区宁夏路201号"
   },
   social: {
     wechat: "#",
