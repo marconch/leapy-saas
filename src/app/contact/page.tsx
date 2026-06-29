@@ -43,21 +43,9 @@ const contactMethods = [
 const offices = [
   {
     city: "上海总部",
-    address: "上海市浦东新区张江高科技园区",
-    phone: "+86 21-1234-5678",
-    email: "shanghai@leapingtech.com"
-  },
-  {
-    city: "北京分公司",
-    address: "北京市海淀区中关村科技园",
-    phone: "+86 10-1234-5678",
-    email: "beijing@leapingtech.com"
-  },
-  {
-    city: "深圳分公司",
-    address: "深圳市南山区高新技术产业园",
-    phone: "+86 755-1234-5678",
-    email: "shenzhen@leapingtech.com"
+    address: "上海市普陀区宁夏路201号",
+    phone: "+86 21-62095557",
+    email: "ch@leapingtech.com"
   }
 ]
 
@@ -154,7 +142,7 @@ export default function ContactPage() {
       {/* Office Locations */}
       <div className="mt-16">
         <h2 className="text-3xl font-bold text-center mb-12">办公地点</h2>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 max-w-md mx-auto">
           {offices.map((office, index) => (
             <Card key={index}>
               <CardHeader>
