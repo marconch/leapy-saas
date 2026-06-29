@@ -83,6 +83,14 @@ export function MobileNavigation() {
                   {item.title}
                 </Link>
               ))}
+              {/* CTA: 联系销售 (免费试用 already shows in the mobile header bar) */}
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className="mt-2 border-t pt-4 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              >
+                联系销售
+              </Link>
             </nav>
           </div>
         </div>
