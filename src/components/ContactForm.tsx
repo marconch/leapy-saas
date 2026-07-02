@@ -1,10 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
+
+// Portal design / Contact 表单：视觉按设计稿；字段契约跟随 /api/contact
+// （name/phone/email 必填——设计稿邮箱为选填，但 API 与 DB 均强制，故保持必填标注）
 
 const inputClass =
-  "w-full mt-1 px-3 py-2 border border-input rounded-md bg-background text-foreground"
+  "rounded-lg border border-[#C4CBD7] bg-[#F7F9FC] px-3.5 py-[11px] font-[inherit] text-[13px] text-[#11151E] outline-none transition-colors focus:border-[#E10A1F] focus:bg-white"
 
 export function ContactForm() {
   const [submitting, setSubmitting] = useState(false)
@@ -37,48 +39,47 @@ export function ContactForm() {
   }
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
-      <div className="grid gap-4 md:grid-cols-2">
-        <div>
-          <label className="text-sm font-medium">姓名 *</label>
-          <input name="name" type="text" required className={inputClass} placeholder="请输入您的姓名" />
-        </div>
-        <div>
-          <label className="text-sm font-medium">电话 *</label>
-          <input name="phone" type="tel" required className={inputClass} placeholder="请输入联系电话" />
-        </div>
+    <form className="flex flex-col gap-[18px]" onSubmit={handleSubmit}>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3.5">
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[12px] font-medium text-[#4A5468]">姓名 *</span>
+          <input name="name" type="text" required placeholder="您的姓名" className={inputClass} />
+        </label>
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[12px] font-medium text-[#4A5468]">公司名称</span>
+          <input name="company" type="text" placeholder="贵公司名称" className={inputClass} />
+        </label>
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[12px] font-medium text-[#4A5468]">电话 *</span>
+          <input name="phone" type="tel" required placeholder="联系电话" className={inputClass} />
+        </label>
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[12px] font-medium text-[#4A5468]">邮箱 *</span>
+          <input name="email" type="email" required placeholder="工作邮箱" className={inputClass} />
+        </label>
       </div>
-      <div>
-        <label className="text-sm font-medium">邮箱 *</label>
-        <input name="email" type="email" required className={inputClass} placeholder="请输入邮箱地址" />
-      </div>
-      <div>
-        <label className="text-sm font-medium">公司名称</label>
-        <input name="company" type="text" className={inputClass} placeholder="请输入公司名称" />
-      </div>
-      <div>
-        <label className="text-sm font-medium">咨询类型</label>
-        <select name="type" defaultValue="" className={inputClass}>
-          <option value="">请选择咨询类型</option>
-          <option value="product">产品咨询</option>
-          <option value="solution">解决方案</option>
-          <option value="pricing">价格咨询</option>
-          <option value="support">技术支持</option>
-          <option value="partnership">合作洽谈</option>
-        </select>
-      </div>
-      <div>
-        <label className="text-sm font-medium">详细描述</label>
-        <textarea name="message" rows={4} className={inputClass} placeholder="请详细描述您的需求或问题" />
-      </div>
+      <label className="flex flex-col gap-1.5">
+        <span className="text-[12px] font-medium text-[#4A5468]">咨询内容</span>
+        <textarea
+          name="message"
+          rows={4}
+          placeholder="请简要描述您的需求，例如所在行业、企业规模、关注的模块…"
+          className={`${inputClass} resize-y`}
+        />
+      </label>
       {result && (
-        <p className={`text-sm ${result.ok ? "text-emerald-500" : "text-red-500"}`} role="status">
+        <p className={`m-0 text-[13px] ${result.ok ? "text-[#0F9D70]" : "text-[#E10A1F]"}`} role="status">
           {result.msg}
         </p>
       )}
-      <Button type="submit" className="w-full" disabled={submitting}>
-        {submitting ? "提交中…" : "提交咨询"}
-      </Button>
+      <button
+        type="submit"
+        disabled={submitting}
+        className="cursor-pointer rounded-lg border-none bg-[#E10A1F] p-[13px] font-[inherit] text-[14px] font-semibold text-white transition-colors hover:bg-[#B00717] disabled:opacity-60"
+      >
+        {submitting ? "提交中…" : "提交咨询 Submit"}
+      </button>
+      <span className="text-[11px] text-[#98A1B2]">提交即表示您同意我们的隐私政策。销售咨询将在 30 分钟内响应。</span>
     </form>
   )
 }
