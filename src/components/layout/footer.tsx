@@ -84,7 +84,17 @@ export function Footer() {
 
       <div className="border-t border-[#1A202B]">
         <div className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-3 px-[clamp(16px,3vw,32px)] py-[18px]">
-          <span className="text-[12px] text-[#515A6E]">© 2026 {siteConfig.creator} · 沪ICP备</span>
+          <span className="text-[12px] text-[#515A6E]">
+            © 2026 {siteConfig.creator} ·{" "}
+            <a
+              href="https://beian.miit.gov.cn/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-[#515A6E] no-underline transition-colors hover:text-[#8B95A8]"
+            >
+              沪ICP备20031664号-1
+            </a>
+          </span>
           <div className="flex gap-5 text-[12px] text-[#515A6E]">
             <Link href="/legal/privacy" className="no-underline transition-colors hover:text-[#8B95A8]">
               隐私政策
