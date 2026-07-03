@@ -61,22 +61,22 @@ export function Header() {
           >
             登录
           </a>
-          <Link
-            href="/contact"
+          <a
+            href={siteConfig.loginUrl}
             className="rounded-lg bg-[#E10A1F] px-[18px] py-[9px] text-[13px] font-semibold text-white no-underline transition-colors hover:bg-[#B00717]"
           >
             免费试用
-          </Link>
+          </a>
         </div>
 
         {/* Mobile (< 960px): CTA + hamburger */}
         <div className="flex items-center gap-3.5 min-[960px]:hidden">
-          <Link
-            href="/contact"
+          <a
+            href={siteConfig.loginUrl}
             className="rounded-lg bg-[#E10A1F] px-3.5 py-2 text-[12px] font-semibold text-white no-underline"
           >
             免费试用
-          </Link>
+          </a>
           <button
             onClick={() => setMenuOpen((o) => !o)}
             className="flex w-[22px] cursor-pointer flex-col gap-1 border-none bg-transparent px-0 py-2"
@@ -114,13 +114,12 @@ export function Header() {
             >
               登录
             </a>
-            <Link
-              href="/contact"
-              onClick={() => setMenuOpen(false)}
+            <a
+              href={siteConfig.loginUrl}
               className="flex-1 rounded-lg bg-[#E10A1F] p-3 text-center text-[14px] font-semibold text-white no-underline"
             >
               免费试用
-            </Link>
+            </a>
           </div>
         </div>
       )}
