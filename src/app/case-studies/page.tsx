@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Counter, Reveal } from "@/components/site/motion"
+import { Reveal } from "@/components/site/motion"
 import { Arrow, CtaBand, Marquee, PageHero, SectionHead } from "@/components/site/ui"
 
 // 标题整行链接到 /case-studies/[slug] 详情页
@@ -11,7 +11,6 @@ export const metadata: Metadata = {
     "领跃 LeanLeap 协同制造管理云平台的成功案例分享，展示在汽车、电子、机械、化工等行业的数字化转型成果。",
 }
 
-type Metric = { value: string; label: string; red: boolean }
 
 const FEATURED_CASES = [
   {
@@ -23,12 +22,7 @@ const FEATURED_CASES = [
       "部署领跃协同制造管理平台，打通采购到入库、销售到出库、生产工单与质检，实现供应链、生产制造与财务的一体化管理。",
     quote: "“领跃平台帮助我们打通了供应链与生产制造的协同管理，效果超出预期。”",
     quoteBy: "张总 · 生产总监",
-    metrics: [
-      { value: "+40%", label: "交付准时率提升", red: true },
-      { value: "-85%", label: "质检不良率降低", red: false },
-      { value: "+60%", label: "库存周转率提升", red: false },
-      { value: "-35%", label: "采购周期缩短", red: false },
-    ],
+    results: ["交付准时率提升", "质检不良率降低", "库存周转率提升", "采购周期缩短"],
   },
   {
     slug: "electronics-factory-smart-upgrade",
@@ -38,12 +32,7 @@ const FEATURED_CASES = [
     solution: "实施领跃生产工单、BOM 与工艺路线管理，结合供应链协同，优化生产计划与资源配置。",
     quote: null,
     quoteBy: null,
-    metrics: [
-      { value: "98%", label: "生产计划准确率", red: true },
-      { value: "-70%", label: "产线切换时间", red: false },
-      { value: "-50%", label: "在制品库存", red: false },
-      { value: "99%", label: "客户交期满足率", red: false },
-    ],
+    results: ["生产计划准确率提升", "产线切换时间减少", "在制品库存降低", "客户交期满足率提升"],
   },
 ]
 
@@ -54,10 +43,7 @@ const COMPACT_CASES = [
     title: "机械制造企业效率优化项目",
     description:
       "传统生产模式协同效率低下，成本核算困难。部署领跃平台后实现生产工单、质检与成本核算、财务一体化管控。",
-    metrics: [
-      { value: "+45%", label: "综合生产效率", red: true },
-      { value: "-20%", label: "制造成本", red: false },
-    ],
+    results: ["综合生产效率提升", "制造成本降低"],
   },
   {
     slug: "chemical-plant-safety-digitalization",
@@ -65,35 +51,17 @@ const COMPACT_CASES = [
     title: "化工企业供应链与财务一体化",
     description:
       "原料批次多、对账流程繁琐，财务月结周期长。贯通采购入库、批次库存、应收应付对账与成本月结。",
-    metrics: [
-      { value: "100%", label: "批次追溯覆盖率", red: true },
-      { value: "-80%", label: "月结对账周期", red: false },
-    ],
+    results: ["批次全程可追溯", "月结对账周期缩短"],
   },
 ]
 
 const INDUSTRIES = ["AUTOMOTIVE", "ELECTRONICS", "MACHINERY", "CHEMICAL"]
 
-/* “+40%” → 符号 / 滚动数字 / 单位 */
-function MetricValue({ value }: { value: string }) {
-  const m = value.match(/^([+-]?)(\d+)(.*)$/)
-  if (!m) return <>{value}</>
+function ResultCell({ no, label }: { no: number; label: string }) {
   return (
-    <>
-      {m[1] && <span className="text-[0.6em] tracking-normal">{m[1]}</span>}
-      <Counter value={Number(m[2])} />
-      {m[3] && <span className="text-[0.5em] tracking-normal">{m[3]}</span>}
-    </>
-  )
-}
-
-function MetricCell({ metric, className = "" }: { metric: Metric; className?: string }) {
-  return (
-    <div className={`flex flex-col justify-between gap-[clamp(28px,4vw,72px)] p-[clamp(16px,2vw,32px)] ${className}`}>
-      <span className="text-[clamp(13px,1.05vw,16px)] font-medium">{metric.label}</span>
-      <span className={`num text-[clamp(44px,6.4vw,120px)] leading-[0.9] ${metric.red ? "text-red" : ""}`}>
-        <MetricValue value={metric.value} />
-      </span>
+    <div className="flex h-full flex-col justify-between gap-[clamp(28px,4vw,72px)] p-[clamp(16px,2vw,32px)]">
+      <span className="eyebrow text-red">{String(no).padStart(2, "0")}</span>
+      <span className="title text-balance text-[clamp(18px,2.2vw,36px)]">{label}</span>
     </div>
   )
 }
@@ -120,7 +88,7 @@ export default function CaseStudiesPage() {
         desc="真实的客户故事：从供应链到财务，看制造企业如何通过领跃实现一体化协同经营。"
       />
 
-      {/* ───────── 精选案例：巨型标题翻色行 + 成果数字宫格 ───────── */}
+      {/* ───────── 精选案例：巨型标题翻色行 + 成果宫格 ───────── */}
       <section className="bg-paper">
         <div className="wrap py-[clamp(72px,10vw,160px)]">
           <SectionHead index="01" eyebrow="Featured" lines={["精选案例"]} />
@@ -165,9 +133,9 @@ export default function CaseStudiesPage() {
                     )}
                   </div>
                   <div className="hairgrid grid-cols-2 self-start lg:col-span-7">
-                    {cs.metrics.map((m, j) => (
-                      <Reveal key={m.label} delay={j * 80}>
-                        <MetricCell metric={m} />
+                    {cs.results.map((label, j) => (
+                      <Reveal key={label} delay={j * 80}>
+                        <ResultCell no={j + 1} label={label} />
                       </Reveal>
                     ))}
                   </div>
@@ -223,9 +191,9 @@ export default function CaseStudiesPage() {
                     </p>
                   </Reveal>
                   <div className="hairgrid on-dark mt-auto grid-cols-2">
-                    {cs.metrics.map((m, j) => (
-                      <Reveal key={m.label} delay={i * 100 + j * 80}>
-                        <MetricCell metric={m} />
+                    {cs.results.map((label, j) => (
+                      <Reveal key={label} delay={i * 100 + j * 80}>
+                        <ResultCell no={j + 1} label={label} />
                       </Reveal>
                     ))}
                   </div>
