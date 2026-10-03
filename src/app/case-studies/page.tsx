@@ -1,14 +1,17 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { Counter, Reveal } from "@/components/site/motion"
+import { Arrow, CtaBand, Marquee, PageHero, SectionHead } from "@/components/site/ui"
 
-// 案例研究页 —— 按 claude.ai/design "Portal design" 项目 CaseStudies.dc.html 逐值重构
-// 卡片标题链接到既有 /case-studies/[slug] 详情页（视觉不变，悬停变红提示）
+// 标题整行链接到 /case-studies/[slug] 详情页
 
 export const metadata: Metadata = {
   title: "客户案例",
   description:
     "领跃 LeanLeap 协同制造管理云平台的成功案例分享，展示在汽车、电子、机械、化工等行业的数字化转型成果。",
 }
+
+type Metric = { value: string; label: string; red: boolean }
 
 const FEATURED_CASES = [
   {
@@ -24,8 +27,8 @@ const FEATURED_CASES = [
       { value: "+40%", label: "交付准时率提升", red: true },
       { value: "-85%", label: "质检不良率降低", red: false },
       { value: "+60%", label: "库存周转率提升", red: false },
-      { value: "-35%", label: "采购周期缩短", red: false }
-    ]
+      { value: "-35%", label: "采购周期缩短", red: false },
+    ],
   },
   {
     slug: "electronics-factory-smart-upgrade",
@@ -39,9 +42,9 @@ const FEATURED_CASES = [
       { value: "98%", label: "生产计划准确率", red: true },
       { value: "-70%", label: "产线切换时间", red: false },
       { value: "-50%", label: "在制品库存", red: false },
-      { value: "99%", label: "客户交期满足率", red: false }
-    ]
-  }
+      { value: "99%", label: "客户交期满足率", red: false },
+    ],
+  },
 ]
 
 const COMPACT_CASES = [
@@ -53,8 +56,8 @@ const COMPACT_CASES = [
       "传统生产模式协同效率低下，成本核算困难。部署领跃平台后实现生产工单、质检与成本核算、财务一体化管控。",
     metrics: [
       { value: "+45%", label: "综合生产效率", red: true },
-      { value: "-20%", label: "制造成本", red: false }
-    ]
+      { value: "-20%", label: "制造成本", red: false },
+    ],
   },
   {
     slug: "chemical-plant-safety-digitalization",
@@ -64,121 +67,181 @@ const COMPACT_CASES = [
       "原料批次多、对账流程繁琐，财务月结周期长。贯通采购入库、批次库存、应收应付对账与成本月结。",
     metrics: [
       { value: "100%", label: "批次追溯覆盖率", red: true },
-      { value: "-80%", label: "月结对账周期", red: false }
-    ]
-  }
+      { value: "-80%", label: "月结对账周期", red: false },
+    ],
+  },
 ]
+
+const INDUSTRIES = ["AUTOMOTIVE", "ELECTRONICS", "MACHINERY", "CHEMICAL"]
+
+/* “+40%” → 符号 / 滚动数字 / 单位 */
+function MetricValue({ value }: { value: string }) {
+  const m = value.match(/^([+-]?)(\d+)(.*)$/)
+  if (!m) return <>{value}</>
+  return (
+    <>
+      {m[1] && <span className="text-[0.6em] tracking-normal">{m[1]}</span>}
+      <Counter value={Number(m[2])} />
+      {m[3] && <span className="text-[0.5em] tracking-normal">{m[3]}</span>}
+    </>
+  )
+}
+
+function MetricCell({ metric, className = "" }: { metric: Metric; className?: string }) {
+  return (
+    <div className={`flex flex-col justify-between gap-[clamp(28px,4vw,72px)] p-[clamp(16px,2vw,32px)] ${className}`}>
+      <span className="text-[clamp(13px,1.05vw,16px)] font-medium">{metric.label}</span>
+      <span className={`num text-[clamp(44px,6.4vw,120px)] leading-[0.9] ${metric.red ? "text-red" : ""}`}>
+        <MetricValue value={metric.value} />
+      </span>
+    </div>
+  )
+}
+
+function RowArrow() {
+  return (
+    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-current transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:-rotate-45 md:h-14 md:w-14">
+      <Arrow />
+    </span>
+  )
+}
 
 export default function CaseStudiesPage() {
   return (
-    <div className="min-h-screen bg-white [font-family:'PingFang_SC',system-ui,sans-serif]">
-      {/* hero */}
-      <div className="mx-auto flex max-w-[1240px] flex-col gap-[18px] px-[clamp(16px,3vw,32px)] pb-[clamp(32px,4vw,48px)] pt-[clamp(48px,7vw,80px)]">
-        <span className="font-grotesk text-[12px] font-semibold tracking-[0.16em] text-[#E10A1F]">CASE STUDIES</span>
-        <h1 className="m-0 text-pretty text-[clamp(30px,4vw,44px)] font-semibold leading-[1.2] tracking-[-0.02em] text-[#11151E]">
-          客户成功案例
-        </h1>
-        <p className="m-0 max-w-[640px] text-[15px] leading-[1.75] text-[#4A5468]">
-          真实的客户故事：从供应链到财务，看制造企业如何通过领跃实现一体化协同经营。
-        </p>
-      </div>
+    <>
+      <PageHero
+        index="05"
+        eyebrow="Case studies"
+        lines={[
+          <span key="l1">
+            客户<span className="text-red">成功案例</span>
+          </span>,
+        ]}
+        desc="真实的客户故事：从供应链到财务，看制造企业如何通过领跃实现一体化协同经营。"
+      />
 
-      {/* cases */}
-      <div className="mx-auto flex max-w-[1240px] flex-col gap-6 px-[clamp(16px,3vw,32px)] pb-[clamp(48px,6vw,72px)]">
-        {FEATURED_CASES.map((cs) => (
-          <div key={cs.slug} className="overflow-hidden rounded-xl border border-[#E2E7EF]">
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))]">
-              <div className="flex flex-col gap-3.5 p-[clamp(24px,3.5vw,40px)]">
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <span className="rounded-full bg-[#FCE9EB] px-2.5 py-1 text-[11px] font-semibold text-[#B00717]">
-                    精选案例
-                  </span>
-                  <span className="font-grotesk text-[11px] tracking-[0.1em] text-[#98A1B2]">{cs.tag}</span>
-                </div>
-                <h2 className="m-0 text-[clamp(19px,2.4vw,24px)] font-semibold tracking-[-0.01em] text-[#11151E]">
-                  <Link href={`/case-studies/${cs.slug}`} className="text-inherit no-underline transition-colors hover:text-[#E10A1F]">
-                    {cs.title}
+      {/* ───────── 精选案例：巨型标题翻色行 + 成果数字宫格 ───────── */}
+      <section className="bg-paper">
+        <div className="wrap py-[clamp(72px,10vw,160px)]">
+          <SectionHead index="01" eyebrow="Featured" lines={["精选案例"]} />
+
+          <div className="mt-[clamp(40px,6vw,96px)] flex flex-col gap-[clamp(56px,8vw,128px)]">
+            {FEATURED_CASES.map((cs, i) => (
+              <article key={cs.slug}>
+                <Reveal>
+                  <Link
+                    href={`/case-studies/${cs.slug}`}
+                    className="flip-row group grid grid-cols-12 items-center gap-x-6 gap-y-4 border-y border-ink px-[clamp(0px,1.2vw,20px)] py-[clamp(24px,3.2vw,56px)]"
+                  >
+                    <span className="col-span-12 flex flex-wrap items-center gap-x-4 gap-y-2">
+                      <span className="eyebrow text-red">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="bg-red px-2 py-1 text-[11px] font-semibold tracking-[0.08em] text-white">精选案例</span>
+                      <span className="eyebrow flip-mute text-mute">{cs.tag}</span>
+                    </span>
+                    <h2 className="display col-span-10 text-[clamp(28px,4.6vw,84px)] text-balance">{cs.title}</h2>
+                    <span className="col-span-2 flex justify-end">
+                      <RowArrow />
+                    </span>
                   </Link>
-                </h2>
-                <p className="m-0 text-[13px] leading-[1.75] text-[#6E7889]">
-                  <span className="font-semibold text-[#4A5468]">挑战：</span>
-                  {cs.challenge}
-                </p>
-                <p className="m-0 text-[13px] leading-[1.75] text-[#6E7889]">
-                  <span className="font-semibold text-[#4A5468]">方案：</span>
-                  {cs.solution}
-                </p>
-                {cs.quote && (
-                  <div className="mt-1 rounded-r-lg border-l-2 border-[#E10A1F] bg-[#F7F9FC] px-[18px] py-3.5">
-                    <p className="mb-1.5 mt-0 text-[13px] leading-[1.7] text-[#4A5468]">{cs.quote}</p>
-                    <span className="text-[12px] text-[#98A1B2]">{cs.quoteBy}</span>
-                  </div>
-                )}
-              </div>
-              <div className="grid content-center grid-cols-2 gap-5 border-l border-[#E2E7EF] bg-[#F7F9FC] p-[clamp(24px,3.5vw,40px)]">
-                {cs.metrics.map((m) => (
-                  <div key={m.label} className="flex flex-col gap-1">
-                    <span className={`font-jbmono text-[30px] font-semibold ${m.red ? "text-[#E10A1F]" : "text-[#11151E]"}`}>
-                      {m.value}
-                    </span>
-                    <span className="text-[12px] text-[#6E7889]">{m.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
+                </Reveal>
 
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-6">
-          {COMPACT_CASES.map((cs) => (
-            <div key={cs.slug} className="flex flex-col gap-3.5 rounded-xl border border-[#E2E7EF] p-[clamp(24px,3vw,32px)]">
-              <span className="font-grotesk text-[11px] tracking-[0.1em] text-[#98A1B2]">{cs.tag}</span>
-              <h2 className="m-0 text-[19px] font-semibold tracking-[-0.01em] text-[#11151E]">
-                <Link href={`/case-studies/${cs.slug}`} className="text-inherit no-underline transition-colors hover:text-[#E10A1F]">
-                  {cs.title}
-                </Link>
-              </h2>
-              <p className="m-0 text-[13px] leading-[1.75] text-[#6E7889]">{cs.description}</p>
-              <div className="mt-auto flex gap-7 border-t border-[#EDF0F6] pt-4">
-                {cs.metrics.map((m) => (
-                  <div key={m.label} className="flex flex-col gap-0.5">
-                    <span className={`font-jbmono text-[24px] font-semibold ${m.red ? "text-[#E10A1F]" : "text-[#11151E]"}`}>
-                      {m.value}
-                    </span>
-                    <span className="text-[11px] text-[#6E7889]">{m.label}</span>
+                <div className="mt-[clamp(28px,4vw,64px)] grid gap-x-10 gap-y-10 lg:grid-cols-12">
+                  <div className="lg:col-span-5">
+                    <dl className="flex flex-col gap-7">
+                      <Reveal className="grid grid-cols-[64px_1fr] gap-x-4">
+                        <dt className="eyebrow pt-1.5 text-red">挑战</dt>
+                        <dd className="text-[clamp(15px,1.25vw,18px)] leading-[1.8]">{cs.challenge}</dd>
+                      </Reveal>
+                      <Reveal delay={80} className="grid grid-cols-[64px_1fr] gap-x-4">
+                        <dt className="eyebrow pt-1.5 text-red">方案</dt>
+                        <dd className="text-[clamp(15px,1.25vw,18px)] leading-[1.8] text-mute">{cs.solution}</dd>
+                      </Reveal>
+                    </dl>
+                    {cs.quote && (
+                      <Reveal delay={160} as="figure" className="mt-[clamp(28px,3.4vw,52px)] border-l-2 border-red pl-[clamp(16px,2vw,28px)]">
+                        <blockquote className="title text-[clamp(19px,1.9vw,28px)] leading-[1.5]">{cs.quote}</blockquote>
+                        <figcaption className="eyebrow mt-4 text-mute">{cs.quoteBy}</figcaption>
+                      </Reveal>
+                    )}
                   </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* CTA */}
-      <div className="bg-[#11151E]">
-        <div className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-6 px-[clamp(16px,3vw,32px)] py-[clamp(40px,5vw,56px)]">
-          <div className="flex flex-col gap-2">
-            <h2 className="m-0 text-[clamp(20px,2.6vw,26px)] font-semibold tracking-[-0.02em] text-[#F6F8FC]">
-              成为下一个成功案例
-            </h2>
-            <span className="text-[13px] text-[#8B95A8]">我们的顾问将结合您的行业特点提供定制化演示。</span>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/contact"
-              className="rounded-lg bg-[#E10A1F] px-[26px] py-[13px] text-[14px] font-semibold text-white no-underline transition-colors hover:bg-[#B00717]"
-            >
-              预约演示 Book a demo
-            </Link>
-            <Link
-              href="/solutions"
-              className="rounded-lg border border-[#39414F] px-[26px] py-[13px] text-[14px] font-medium text-[#DBE1EC] no-underline transition-colors hover:border-[#6B7589]"
-            >
-              行业方案 Solutions
-            </Link>
+                  <div className="hairgrid grid-cols-2 self-start lg:col-span-7">
+                    {cs.metrics.map((m, j) => (
+                      <Reveal key={m.label} delay={j * 80}>
+                        <MetricCell metric={m} />
+                      </Reveal>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      {/* ───────── 更多行业 ───────── */}
+      <section className="relative bg-ink text-paper">
+        <div aria-hidden className="grid-bg on-dark pointer-events-none absolute inset-0" />
+        <div className="relative pt-[clamp(72px,10vw,160px)]">
+          <div aria-hidden>
+            <Marquee
+              duration={44}
+              className="border-y border-white/12 py-[clamp(14px,1.6vw,24px)]"
+              itemClassName="font-display text-[clamp(40px,6.6vw,120px)] font-black leading-none tracking-[-0.04em]"
+              items={INDUSTRIES.flatMap((name, i) => [
+                <span key={name} className={i % 2 ? "outline-text text-paper" : "text-paper"}>
+                  {name}
+                </span>,
+                <span key={`${name}-sep`} className="mx-[0.35em] inline-block h-[0.14em] w-[0.7em] bg-red" />,
+              ])}
+            />
+          </div>
+
+          <div className="wrap pb-[clamp(72px,10vw,160px)] pt-[clamp(56px,8vw,128px)]">
+            <SectionHead index="02" eyebrow="More cases" onDark lines={["更多行业实践"]} />
+
+            <div className="mt-[clamp(40px,6vw,96px)] grid gap-x-[clamp(24px,4vw,72px)] gap-y-[clamp(48px,6vw,80px)] lg:grid-cols-2">
+              {COMPACT_CASES.map((cs, i) => (
+                <article key={cs.slug} className="flex flex-col">
+                  <Reveal delay={i * 100}>
+                    <Link
+                      href={`/case-studies/${cs.slug}`}
+                      className="flip-row group flex items-center justify-between gap-6 border-y border-paper px-[clamp(0px,1.2vw,20px)] py-[clamp(22px,2.6vw,40px)] [--flip-bg:var(--color-paper)] [--flip-fg:var(--color-ink)]"
+                    >
+                      <span className="flex flex-col gap-4">
+                        <span className="flex items-center gap-4">
+                          <span className="eyebrow text-red">{String(FEATURED_CASES.length + i + 1).padStart(2, "0")}</span>
+                          <span className="eyebrow flip-mute text-mute-d">{cs.tag}</span>
+                        </span>
+                        <h2 className="title text-[clamp(24px,2.7vw,44px)] text-balance">{cs.title}</h2>
+                      </span>
+                      <RowArrow />
+                    </Link>
+                  </Reveal>
+                  <Reveal delay={i * 100 + 80}>
+                    <p className="mb-[clamp(24px,3vw,44px)] mt-[clamp(20px,2.4vw,36px)] max-w-[560px] text-[clamp(15px,1.15vw,17px)] leading-[1.85] text-mute-d">
+                      {cs.description}
+                    </p>
+                  </Reveal>
+                  <div className="hairgrid on-dark mt-auto grid-cols-2">
+                    {cs.metrics.map((m, j) => (
+                      <Reveal key={m.label} delay={i * 100 + j * 80}>
+                        <MetricCell metric={m} />
+                      </Reveal>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <CtaBand
+        lines={["成为下一个", "成功案例"]}
+        sub="我们的顾问将结合您的行业特点提供定制化演示。"
+        primary={{ label: "预约演示 Book a demo", href: "/contact" }}
+        secondary={{ label: "行业方案 Solutions", href: "/solutions" }}
+      />
+    </>
   )
 }

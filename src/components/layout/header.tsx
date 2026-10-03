@@ -5,125 +5,172 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { siteConfig } from "@/lib/site-config"
+import { Arrow } from "@/components/site/ui"
 
-// Portal design / SiteHeader：桌面断点 960px，当前页红色下划线高亮
 const NAV_ITEMS = [
-  { key: "products", label: "产品", href: "/products" },
-  { key: "solutions", label: "解决方案", href: "/solutions" },
-  { key: "industries", label: "行业应用", href: "/industries" },
-  { key: "pricing", label: "价格", href: "/pricing" },
-  { key: "cases", label: "案例研究", href: "/case-studies" },
-  { key: "resources", label: "资源", href: "/resources" },
-  { key: "about", label: "关于我们", href: "/about" },
-  { key: "contact", label: "联系我们", href: "/contact" }
+  { label: "产品", en: "Products", href: "/products" },
+  { label: "解决方案", en: "Solutions", href: "/solutions" },
+  { label: "行业应用", en: "Industries", href: "/industries" },
+  { label: "价格", en: "Pricing", href: "/pricing" },
+  { label: "案例研究", en: "Cases", href: "/case-studies" },
+  { label: "资源", en: "Resources", href: "/resources" },
+  { label: "关于我们", en: "About", href: "/about" },
+  { label: "联系我们", en: "Contact", href: "/contact" },
 ]
 
 export function Header() {
   const pathname = usePathname()
-  const [menuOpen, setMenuOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false)
+  const [scrolled, setScrolled] = React.useState(false)
+  const [hidden, setHidden] = React.useState(false)
 
-  const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(`${href}/`)
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`)
+
+  React.useEffect(() => {
+    let lastY = window.scrollY
+    const onScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 24)
+      setHidden(y > 480 && y > lastY + 2)
+      if (y < lastY - 2) setHidden(false)
+      lastY = y
+    }
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  React.useEffect(() => setOpen(false), [pathname])
+
+  React.useEffect(() => {
+    document.documentElement.style.overflow = open ? "hidden" : ""
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false)
+    window.addEventListener("keydown", onKey)
+    return () => {
+      document.documentElement.style.overflow = ""
+      window.removeEventListener("keydown", onKey)
+    }
+  }, [open])
 
   return (
-    <div className="sticky top-0 z-50 border-b border-[#E2E7EF] bg-[rgba(255,255,255,.96)] backdrop-blur-[10px] [font-family:'PingFang_SC',system-ui,sans-serif]">
-      <div className="mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-4 px-[clamp(16px,3vw,32px)]">
-        <Link href="/" className="flex shrink-0 items-center gap-2.5 no-underline">
-          <Image src="/logo.svg" alt="LeanLeap" width={28} height={28} className="h-7 w-7" priority />
-          <span className="flex items-baseline gap-1.5">
-            <span className="text-[16px] font-semibold text-[#11151E]">领跃</span>
-            <span className="font-grotesk text-[14px] font-semibold tracking-[-0.02em] text-[#11151E]">LeanLeap</span>
-          </span>
-        </Link>
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,border-color,backdrop-filter] duration-500 ease-[cubic-bezier(.16,1,.3,1)] ${
+          hidden && !open ? "-translate-y-full" : "translate-y-0"
+        } ${
+          scrolled && !open
+            ? "border-b border-line bg-paper/85 backdrop-blur-xl"
+            : "border-b border-transparent bg-transparent"
+        }`}
+      >
+        <div className="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
+          <Link
+            href="/"
+            className={`relative z-[60] flex shrink-0 items-center gap-2.5 transition-colors duration-500 ${open ? "text-paper" : "text-ink"}`}
+          >
+            <Image src="/logo.svg" alt="" width={30} height={30} className="h-[30px] w-[30px]" priority />
+            <span className="flex items-baseline gap-1.5">
+              <span className="font-display text-[17px] font-bold">领跃</span>
+              <span className="font-grotesk text-[15px] font-semibold tracking-[-0.02em]">LeanLeap</span>
+              <span className="sr-only">首页</span>
+            </span>
+          </Link>
 
-        {/* Desktop navigation (>= 960px) */}
-        <nav className="hidden gap-1 text-[13px] min-[960px]:flex">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.key}
-              href={item.href}
-              className={
-                isActive(item.href)
-                  ? "border-b-2 border-[#E10A1F] px-2.5 pb-5 pt-[22px] font-semibold text-[#11151E] no-underline"
-                  : "border-b-2 border-transparent px-2.5 pb-5 pt-[22px] font-normal text-[#4A5468] no-underline transition-colors hover:text-[#11151E]"
-              }
+          <nav aria-label="主导航" className="hidden items-center gap-[clamp(14px,1.7vw,30px)] text-[14px] min-[1100px]:flex">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                data-active={isActive(item.href)}
+                aria-current={isActive(item.href) ? "page" : undefined}
+                className={`ulink py-1 transition-colors ${isActive(item.href) ? "font-semibold text-ink" : "text-ink/70 hover:text-ink"}`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex shrink-0 items-center gap-2.5">
+            <a href={siteConfig.loginUrl} className="ulink mr-3 hidden text-[14px] text-ink/80 hover:text-ink min-[1100px]:block">
+              登录
+            </a>
+            <a
+              href={siteConfig.loginUrl}
+              className={`btn btn-red btn-sm relative z-[60] ${open ? "max-[480px]:hidden" : ""}`}
             >
-              {item.label}
+              <span>免费试用</span>
+              <span className="btn-arrow">
+                <Arrow size={12} />
+              </span>
+            </a>
+            <button
+              type="button"
+              onClick={() => setOpen((o) => !o)}
+              aria-label={open ? "关闭菜单" : "打开菜单"}
+              aria-expanded={open}
+              aria-controls="site-menu"
+              className={`relative z-[60] grid h-11 w-11 cursor-pointer place-items-center rounded-full border transition-colors duration-500 min-[1100px]:hidden ${
+                open ? "border-white/25 text-paper" : "border-line text-ink"
+              }`}
+            >
+              <span className="relative block h-3 w-[18px]">
+                <span
+                  className={`absolute left-0 top-0 h-[1.5px] w-full bg-current transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] ${open ? "translate-y-[5px] rotate-45" : ""}`}
+                />
+                <span
+                  className={`absolute bottom-0 left-0 h-[1.5px] w-full bg-current transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] ${open ? "-translate-y-[5px] -rotate-45" : ""}`}
+                />
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* 全屏菜单 */}
+      <div
+        id="site-menu"
+        aria-hidden={!open}
+        className={`fixed inset-0 z-40 flex flex-col bg-ink text-paper transition-[clip-path,visibility] duration-700 ease-[cubic-bezier(.76,0,.24,1)] min-[1100px]:hidden ${
+          open
+            ? "visible [clip-path:inset(0_0_0_0)]"
+            : "invisible [clip-path:inset(0_0_100%_0)]"
+        }`}
+      >
+        <div aria-hidden className="grid-bg on-dark pointer-events-none absolute inset-0" />
+        <nav
+          aria-label="移动端导航"
+          className="wrap relative flex flex-1 flex-col justify-center overflow-y-auto pb-6 pt-[calc(var(--header-h)+16px)]"
+        >
+          {NAV_ITEMS.map((item, i) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              tabIndex={open ? 0 : -1}
+              onClick={() => setOpen(false)}
+              className="group flex items-baseline justify-between gap-4 border-b border-white/12 py-[clamp(10px,1.9vh,18px)]"
+            >
+              <span className="flex items-baseline gap-4 overflow-hidden">
+                <span className="eyebrow w-6 text-white/65">{String(i + 1).padStart(2, "0")}</span>
+                <span
+                  className={`font-display text-[clamp(26px,7.4vw,44px)] font-bold tracking-[-0.03em] transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] ${
+                    open ? "translate-y-0" : "translate-y-[120%]"
+                  } ${isActive(item.href) ? "text-red" : ""}`}
+                  style={{ transitionDelay: open ? `${180 + i * 45}ms` : "0ms" }}
+                >
+                  {item.label}
+                </span>
+              </span>
+              <span className="eyebrow text-white/65 transition-colors group-hover:text-red">{item.en}</span>
             </Link>
           ))}
         </nav>
-
-        <div className="hidden shrink-0 items-center gap-3.5 min-[960px]:flex">
-          <span className="font-grotesk cursor-pointer text-[12px] tracking-[0.04em] text-[#6E7889]">中 · EN</span>
-          <a
-            href={siteConfig.loginUrl}
-            className="rounded-lg border border-[#C4CBD7] px-3.5 py-2 text-[13px] font-medium text-[#1C2230] no-underline transition-colors hover:border-[#98A1B2]"
-          >
+        <div className="wrap relative flex flex-wrap items-center justify-between gap-4 pb-8 pt-4">
+          <a href={siteConfig.loginUrl} tabIndex={open ? 0 : -1} className="btn btn-ghost on-dark btn-sm">
             登录
           </a>
-          <Link
-            href="/contact"
-            className="rounded-lg bg-[#E10A1F] px-[18px] py-[9px] text-[13px] font-semibold text-white no-underline transition-colors hover:bg-[#B00717]"
-          >
-            免费试用
-          </Link>
-        </div>
-
-        {/* Mobile (< 960px): CTA + hamburger */}
-        <div className="flex items-center gap-3.5 min-[960px]:hidden">
-          <Link
-            href="/contact"
-            className="rounded-lg bg-[#E10A1F] px-3.5 py-2 text-[12px] font-semibold text-white no-underline"
-          >
-            免费试用
-          </Link>
-          <button
-            onClick={() => setMenuOpen((o) => !o)}
-            className="flex w-[22px] cursor-pointer flex-col gap-1 border-none bg-transparent px-0 py-2"
-            aria-label={menuOpen ? "关闭菜单" : "打开菜单"}
-            aria-expanded={menuOpen}
-          >
-            <span className="block h-0.5 rounded-sm bg-[#1C2230]" />
-            <span className="block h-0.5 rounded-sm bg-[#1C2230]" />
-            <span className="block h-0.5 rounded-sm bg-[#1C2230]" />
-          </button>
+          <span className="eyebrow text-white/65">{siteConfig.contact.email}</span>
         </div>
       </div>
-
-      {/* Mobile dropdown menu */}
-      {menuOpen && (
-        <div className="flex flex-col border-t border-[#E2E7EF] bg-white px-[clamp(16px,3vw,32px)] pb-5 pt-2 min-[960px]:hidden">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.key}
-              href={item.href}
-              onClick={() => setMenuOpen(false)}
-              className={
-                isActive(item.href)
-                  ? "border-b border-[#EDF0F6] py-3.5 text-[15px] font-semibold text-[#11151E] no-underline"
-                  : "border-b border-[#EDF0F6] py-3.5 text-[15px] font-normal text-[#4A5468] no-underline"
-              }
-            >
-              {item.label}
-            </Link>
-          ))}
-          <div className="mt-4 flex gap-2.5">
-            <a
-              href={siteConfig.loginUrl}
-              className="flex-1 rounded-lg border border-[#C4CBD7] p-3 text-center text-[14px] font-medium text-[#1C2230] no-underline"
-            >
-              登录
-            </a>
-            <Link
-              href="/contact"
-              onClick={() => setMenuOpen(false)}
-              className="flex-1 rounded-lg bg-[#E10A1F] p-3 text-center text-[14px] font-semibold text-white no-underline"
-            >
-              免费试用
-            </Link>
-          </div>
-        </div>
-      )}
-    </div>
+    </>
   )
 }
