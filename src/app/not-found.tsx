@@ -1,95 +1,98 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { GridPulse, Reveal, Rule } from "@/components/site/motion"
+import { Arrow, Btn, Tag } from "@/components/site/ui"
+
+const POPULAR = [
+  { href: "/case-studies", title: "客户案例", desc: "查看成功案例" },
+  { href: "/pricing", title: "价格方案", desc: "了解定价信息" },
+  { href: "/resources", title: "资源中心", desc: "技术文档资料" },
+]
 
 export default function NotFound() {
   return (
-    <div className="container mx-auto px-6 py-16">
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <Card className="w-full max-w-lg">
-          <CardContent className="pt-6 text-center space-y-6">
-            {/* 404 Illustration */}
-            <div className="text-6xl font-bold text-muted-foreground">
-              404
+    <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-paper pt-[calc(var(--header-h)+clamp(24px,4vw,56px))]">
+      <div
+        aria-hidden
+        className="grid-bg pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black_30%,transparent_95%)]"
+      />
+      <GridPulse className="[mask-image:linear-gradient(to_bottom,black_30%,transparent_95%)]" />
+
+      <div className="wrap relative flex flex-1 flex-col pb-[clamp(40px,6vw,88px)]">
+        <Reveal variant="fade" className="flex items-center justify-between gap-6">
+          <Tag index="—">Error 404</Tag>
+          <span aria-hidden className="eyebrow hidden text-mute sm:block">
+            Page not found
+          </span>
+        </Reveal>
+
+        {/* 巨型 404 */}
+        <Reveal variant="scale" delay={100} className="relative mt-[clamp(8px,2vw,24px)]">
+          <p
+            aria-hidden
+            className="num m-0 flex select-none items-end text-[clamp(150px,36vw,620px)] leading-[0.82] tracking-[-0.07em]"
+          >
+            <span>4</span>
+            <span className="text-red">0</span>
+            <span>4</span>
+            <span className="mb-[0.08em] ml-[0.06em] inline-block h-[0.1em] w-[0.1em] bg-red" />
+          </p>
+        </Reveal>
+
+        <div className="mt-[clamp(32px,5vw,72px)] grid gap-x-10 gap-y-12 md:grid-cols-12">
+          <Reveal delay={200} className="md:col-span-6">
+            <h1 className="title text-[clamp(32px,5.2vw,88px)]">页面未找到</h1>
+            <p className="mt-5 max-w-[520px] text-[clamp(16px,1.35vw,20px)] leading-[1.75] text-ink/80">
+              抱歉，您访问的页面不存在或已被移动。
+            </p>
+            <p className="eyebrow mt-9 text-mute">您可以尝试以下选项：</p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Btn href="/" magnetic>
+                返回首页
+              </Btn>
+              <Btn href="/products" variant="ghost">
+                查看产品
+              </Btn>
+              <Btn href="/solutions" variant="ghost">
+                解决方案
+              </Btn>
+              <Btn href="/contact" variant="ghost">
+                联系我们
+              </Btn>
             </div>
+          </Reveal>
 
-            {/* Error Message */}
-            <div className="space-y-2">
-              <h1 className="text-2xl font-bold">页面未找到</h1>
-              <p className="text-muted-foreground">
-                抱歉，您访问的页面不存在或已被移动。
-              </p>
+          <Reveal delay={320} className="md:col-span-5 md:col-start-8">
+            <div className="mb-5 flex items-baseline justify-between">
+              <h2 className="text-[15px] font-semibold">热门页面：</h2>
+              <span aria-hidden className="eyebrow text-mute">
+                Popular
+              </span>
             </div>
-
-            {/* Helpful Links */}
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                您可以尝试以下选项：
-              </p>
-
-              <div className="grid gap-2">
-                <Button asChild className="w-full">
-                  <Link href="/">
-                    返回首页
+            <Rule className="!bg-ink !opacity-100" />
+            <ul>
+              {POPULAR.map((item, i) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="flip-row group flex items-center gap-5 border-b border-line px-[clamp(0px,1vw,14px)] py-[clamp(14px,1.6vw,22px)]"
+                  >
+                    <span className="eyebrow text-red">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="text-[clamp(17px,1.5vw,22px)] font-semibold">{item.title}</span>
+                    <span className="flip-mute text-[14px] text-mute">— {item.desc}</span>
+                    <Arrow className="ml-auto shrink-0 transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:translate-x-1" />
                   </Link>
-                </Button>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <Button variant="outline" size="sm" asChild>
-                    <Link href="/products">
-                      查看产品
-                    </Link>
-                  </Button>
-                  <Button variant="outline" size="sm" asChild>
-                    <Link href="/solutions">
-                      解决方案
-                    </Link>
-                  </Button>
-                </div>
-
-                <Button variant="ghost" size="sm" asChild>
-                  <Link href="/contact">
-                    联系我们
-                  </Link>
-                </Button>
-              </div>
-            </div>
-
-            {/* Search Suggestions */}
-            <div className="pt-4 border-t text-left space-y-2">
-              <p className="text-sm font-medium">热门页面：</p>
-              <div className="text-sm space-y-1">
-                <div>
-                  <Link href="/case-studies" className="text-primary hover:underline">
-                    客户案例
-                  </Link>
-                  <span className="text-muted-foreground"> - 查看成功案例</span>
-                </div>
-                <div>
-                  <Link href="/pricing" className="text-primary hover:underline">
-                    价格方案
-                  </Link>
-                  <span className="text-muted-foreground"> - 了解定价信息</span>
-                </div>
-                <div>
-                  <Link href="/resources" className="text-primary hover:underline">
-                    资源中心
-                  </Link>
-                  <span className="text-muted-foreground"> - 技术文档资料</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Additional Help */}
-            <div className="pt-4 text-xs text-muted-foreground">
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 text-[13px] text-mute">
               如果您认为这是一个错误，请
-              <Link href="/contact" className="text-primary hover:underline">
+              <Link href="/contact" className="ulink text-ink">
                 联系我们
               </Link>
-            </div>
-          </CardContent>
-        </Card>
+            </p>
+          </Reveal>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }

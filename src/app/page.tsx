@@ -71,7 +71,7 @@ export default function Home() {
           <Lines
             as="h1"
             delay={520}
-            className="display mt-[clamp(24px,3.2vw,48px)] text-[clamp(38px,10vw,196px)]"
+            className="display mt-[clamp(24px,3.2vw,48px)] text-[clamp(38px,10vw,176px)]"
             lines={[
               "一体化协同制造管理",
               <span key="l2" className="flex items-baseline gap-[0.12em]">
@@ -91,6 +91,12 @@ export default function Home() {
                 ))}
               </ol>
               <p className="mt-3 font-grotesk text-[14px] text-mute">One platform from procurement to finance.</p>
+              <div aria-hidden className="mt-[clamp(40px,6vw,96px)] hidden items-center gap-4 md:flex">
+                <span className="relative block h-14 w-px overflow-hidden bg-ink/15">
+                  <span className="scroll-cue absolute inset-x-0 top-0 h-1/2 bg-red" />
+                </span>
+                <span className="eyebrow text-mute">Scroll</span>
+              </div>
             </Reveal>
             <Reveal delay={980} className="md:col-span-7 md:col-start-6 lg:col-span-5 lg:col-start-8">
               <p className="text-[clamp(16px,1.35vw,20px)] leading-[1.75] text-ink/85">

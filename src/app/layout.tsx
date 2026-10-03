@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Space_Grotesk, JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
+import { Geist, Geist_Mono, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -27,12 +28,14 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
-// 中文展示字体：仅标题使用（700/900），按 unicode-range 分片按需加载
-const notoSansSC = Noto_Sans_SC({
+// 中文展示字体：Noto Sans SC（OFL）可变字重 700–900 的自托管子集，仅含站内出现的字符。
+// 文案改动后用 scripts/subset-font.sh 重新生成；子集外的字符回退到系统字体。
+const notoSansSC = localFont({
+  src: "../fonts/NotoSansSC-display.woff",
   variable: "--font-noto-sc",
-  weight: ["700", "900"],
-  preload: false,
+  weight: "700 900",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {

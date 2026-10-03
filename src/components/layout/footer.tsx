@@ -92,7 +92,7 @@ export function Footer() {
       {/* 巨型字标 */}
       <Reveal variant="fade" className="wrap select-none">
         <div aria-hidden className="[container-type:inline-size]">
-          <div className="font-grotesk whitespace-nowrap text-center text-[23.4cqw] font-bold leading-[0.82] tracking-[-0.055em] text-paper">
+          <div className="font-grotesk whitespace-nowrap text-center text-[23.4cqw] font-bold pb-[0.06em] leading-[0.9] tracking-[-0.055em] text-paper">
             LeanLeap
           </div>
         </div>

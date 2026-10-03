@@ -40,9 +40,18 @@ export function Gallery() {
   const ref = useScrollProgress<HTMLDivElement>("track")
   return (
     <div ref={ref} className="relative lg:h-[360vh]">
+      <div className="wrap mb-10 lg:hidden">
+        <Tag index="05" className="text-paper">
+          Product in action
+        </Tag>
+        <Lines lines={["所见，", "即真实产品"]} className="title mt-6 text-[clamp(36px,9vw,64px)]" />
+        <p className="mt-5 text-[15px] leading-[1.8] text-mute-d">
+          以下画面均截取自领跃系统的演示环境，没有效果图，也没有概念稿。
+        </p>
+      </div>
       <div className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center lg:overflow-hidden">
-        <div className="flex w-max items-stretch gap-[clamp(20px,3vw,56px)] px-[var(--gutter)] max-lg:w-auto max-lg:snap-x max-lg:snap-mandatory max-lg:overflow-x-auto max-lg:pb-6 lg:[transform:translate3d(calc(var(--p,0)*(100vw_-_100%)),0,0)] lg:will-change-transform">
-          <div className="flex w-[min(86vw,520px)] shrink-0 snap-start flex-col justify-between gap-10 lg:w-[34vw]">
+        <div className="flex w-max items-stretch gap-[clamp(20px,3vw,56px)] px-[var(--gutter)] max-lg:w-auto max-lg:snap-x max-lg:snap-mandatory max-lg:overflow-x-auto max-lg:pb-6 max-lg:[scrollbar-width:none] lg:[transform:translate3d(calc(var(--p,0)*(100vw_-_100%)),0,0)] lg:will-change-transform">
+          <div className="hidden w-[34vw] shrink-0 flex-col justify-between gap-10 lg:flex">
             <div>
               <Reveal variant="fade">
                 <Tag index="05" className="text-paper">
@@ -69,7 +78,7 @@ export function Gallery() {
                 <span className="font-display text-[clamp(20px,1.8vw,28px)] font-bold tracking-[-0.02em]">
                   {shot.title}
                 </span>
-                <span className="ml-auto max-w-[46%] text-right text-[13px] leading-[1.7] text-mute-d">{shot.desc}</span>
+                <span className="ml-auto max-w-[56%] text-right text-[13px] leading-[1.7] text-mute-d">{shot.desc}</span>
               </figcaption>
             </figure>
           ))}
