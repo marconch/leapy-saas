@@ -1,4 +1,4 @@
-import { Counter, GridPulse, Grow, Lines, Reveal, Rule, ScrollScene } from "@/components/site/motion"
+import { Counter, GridPulse, Lines, Reveal, Rule, ScrollScene } from "@/components/site/motion"
 import { Arrow, Btn, CtaBand, Marquee, SectionHead, ShotFrame, Tag } from "@/components/site/ui"
 import { ChainScrolly } from "@/components/home/chain"
 import { CHAIN } from "@/components/home/chain-data"
@@ -6,10 +6,9 @@ import { Gallery } from "@/components/home/gallery"
 import Link from "next/link"
 
 const STATS = [
-  { value: 50, suffix: "+", label: "服务客户", caption: "Clients" },
-  { value: 8, suffix: "", label: "核心业务模块", caption: "Modules" },
-  { value: 20, suffix: "年", label: "行业经验", caption: "Years" },
-  { value: 96, suffix: "%", label: "订单准时交付率", caption: "On-time delivery", red: true },
+  { value: 50, suffix: "+", label: "服务客户", caption: "Clients", red: true },
+  { value: 8, suffix: "", label: "核心业务模块", caption: "Modules", red: false },
+  { value: 20, suffix: "年", label: "行业经验", caption: "Years", red: false },
 ]
 
 const HERO_PILLS = ["多租户 SaaS 快速上线", "采购到财务全链路打通", "工作流审批灵活可配"]
@@ -36,14 +35,6 @@ const SERVICES = [
     points: ["供应链、制造、财务成本、报表分析模块化组合", "支持多租户 SaaS 与经营数据闭环"],
     href: "/solutions",
   },
-]
-
-const KPIS = [
-  { label: "订单准时交付率", value: 96, red: true },
-  { label: "月度结账及时率", value: 95 },
-  { label: "应收回款率", value: 92 },
-  { label: "单据审批时效", value: 88 },
-  { label: "库存周转率", value: 82 },
 ]
 
 const ADVANTAGES = [
@@ -181,7 +172,7 @@ export default function Home() {
       <section className="bg-paper">
         <div className="wrap py-[clamp(72px,10vw,160px)]">
           <SectionHead index="02" eyebrow="By the numbers" lines={["二十年行业经验，", "沉淀为一套系统"]} />
-          <div className="hairgrid mt-[clamp(40px,6vw,96px)] grid-cols-2 lg:grid-cols-4">
+          <div className="hairgrid mt-[clamp(40px,6vw,96px)] grid-cols-1 sm:grid-cols-3">
             {STATS.map((stat, i) => (
               <Reveal
                 key={stat.caption}
@@ -243,54 +234,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ───────── 经营指标 ───────── */}
+      {/* ───────── 平台优势 ───────── */}
       <section className="bg-paper-2">
         <div className="wrap py-[clamp(72px,10vw,160px)]">
           <SectionHead
             index="04"
-            eyebrow="Live operations"
-            lines={["实时经营指标"]}
+            eyebrow="Advantages"
+            lines={["平台优势"]}
             desc="将采购、生产、库存、财务与成本指标统一到同一数据底座，以数据驱动的方式持续优化经营决策。"
           />
-          <div className="mt-[clamp(40px,6vw,96px)] grid gap-x-10 gap-y-16 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <div className="mb-6 flex items-baseline justify-between">
-                <span className="text-[15px] font-semibold">核心 KPI 指标</span>
-                <span className="eyebrow text-mute">KPI / %</span>
-              </div>
-              {KPIS.map((kpi, i) => (
-                <Reveal key={kpi.label} delay={i * 70} className="border-t border-line py-[clamp(14px,1.6vw,22px)] last:border-b">
-                  <div className="flex items-end justify-between gap-6">
-                    <span className="text-[clamp(15px,1.3vw,19px)]">{kpi.label}</span>
-                    <span className={`num text-[clamp(32px,4vw,64px)] leading-none ${kpi.red ? "text-red" : ""}`}>
-                      <Counter value={kpi.value} duration={1400} />
-                      <span className="text-[0.5em]">%</span>
-                    </span>
-                  </div>
-                  <div className="mt-4 h-[3px] w-full bg-ink/10">
-                    <Grow
-                      delay={200 + i * 70}
-                      className={`h-full ${kpi.red ? "bg-red" : "bg-ink"}`}
-                      style={{ width: `${kpi.value}%` }}
-                    />
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-            <div className="lg:col-span-4 lg:col-start-9">
-              <div className="mb-6 flex items-baseline justify-between">
-                <span className="text-[15px] font-semibold">平台优势</span>
-                <span className="eyebrow text-mute">Advantages</span>
-              </div>
-              <Rule className="!opacity-100 !bg-ink" />
+          <div className="mt-[clamp(40px,6vw,96px)] grid gap-x-10 md:grid-cols-12">
+            <div className="md:col-span-9 md:col-start-4">
+              <Rule className="!bg-ink !opacity-100" />
               {ADVANTAGES.map((advantage, i) => (
                 <Reveal
                   key={advantage}
                   delay={i * 70}
-                  className="flex items-baseline gap-5 border-b border-line py-[clamp(16px,1.8vw,24px)]"
+                  className="flex items-baseline gap-[clamp(16px,3vw,48px)] border-b border-line py-[clamp(18px,2.4vw,36px)]"
                 >
                   <span className="eyebrow text-red">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="text-[clamp(16px,1.4vw,21px)] font-medium">{advantage}</span>
+                  <span className="title text-[clamp(20px,2.6vw,40px)]">{advantage}</span>
                 </Reveal>
               ))}
             </div>
