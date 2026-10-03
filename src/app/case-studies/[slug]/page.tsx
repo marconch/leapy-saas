@@ -70,8 +70,6 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const info = [
     { label: "客户企业", value: caseStudy.company },
     { label: "所属行业", value: caseStudy.industry },
-    { label: "实施时间", value: "2023年" },
-    { label: "项目周期", value: "6个月" },
   ]
 
   const chapters = [
