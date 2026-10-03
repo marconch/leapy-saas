@@ -18,7 +18,7 @@ const INDUSTRY_DISTRIBUTION = [
 ]
 
 const RESULTS = [
-  { value: 500, suffix: "+", label: "服务企业数量", caption: "Enterprises", red: false },
+  { value: 50, suffix: "+", label: "服务企业数量", caption: "Enterprises", red: false },
   { value: 2000, suffix: "+", label: "覆盖生产线", caption: "Production lines", red: false },
   { value: 35, suffix: "%", label: "平均效率提升", caption: "Efficiency", red: true },
   { value: 98, suffix: "%", label: "客户满意度", caption: "Satisfaction", red: true },
