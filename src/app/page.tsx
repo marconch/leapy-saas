@@ -1,13 +1,15 @@
+import { Counter, GridPulse, Grow, Lines, Reveal, Rule, ScrollScene } from "@/components/site/motion"
+import { Arrow, Btn, CtaBand, Marquee, SectionHead, ShotFrame, Tag } from "@/components/site/ui"
+import { ChainScrolly } from "@/components/home/chain"
+import { CHAIN } from "@/components/home/chain-data"
+import { Gallery } from "@/components/home/gallery"
 import Link from "next/link"
 
-// 首页 —— 按 claude.ai/design "Portal design" 项目 Home.dc.html 逐值重构
-// 设计语言：白底、红色强调 #E10A1F、英文标签 Space Grotesk、数字 JetBrains Mono
-
-const HERO_STATS = [
-  { value: "50+", label: "服务客户", caption: "CLIENTS", tinted: true },
-  { value: "8", label: "核心业务模块", caption: "MODULES", tinted: false },
-  { value: "20", unit: "年", label: "行业经验", caption: "YEARS", tinted: false },
-  { value: "96%", label: "订单准时交付率", caption: "ON-TIME DELIVERY", tinted: true, red: true }
+const STATS = [
+  { value: 50, suffix: "+", label: "服务客户", caption: "Clients" },
+  { value: 8, suffix: "", label: "核心业务模块", caption: "Modules" },
+  { value: 20, suffix: "年", label: "行业经验", caption: "Years" },
+  { value: 96, suffix: "%", label: "订单准时交付率", caption: "On-time delivery", red: true },
 ]
 
 const HERO_PILLS = ["多租户 SaaS 快速上线", "采购到财务全链路打通", "工作流审批灵活可配"]
@@ -17,28 +19,31 @@ const SERVICES = [
     no: "01",
     title: "领跃协同制造管理系统",
     description: "覆盖采购、销售、生产、库存、财务、成本的全链路业务协同。",
-    points: ["打通供应链与财务，降低库存积压与对账差错", "跨部门在线协同，提升单据流转与履约效率"]
+    points: ["打通供应链与财务，降低库存积压与对账差错", "跨部门在线协同，提升单据流转与履约效率"],
+    href: "/products",
   },
   {
     no: "02",
     title: "专业的实施、开发、运维服务",
     description: "以客户业务为核心，从咨询、实施到运维全程陪伴。",
-    points: ["以客户为中心，赋能企业数字化转型"]
+    points: ["以客户为中心，赋能企业数字化转型"],
+    href: "/contact",
   },
   {
     no: "03",
     title: "一体化数字化经营方案",
     description: "结合制造行业经验，提供端到端的业务中台与经营分析。",
-    points: ["供应链、制造、财务成本、报表分析模块化组合", "支持多租户 SaaS 与经营数据闭环"]
-  }
+    points: ["供应链、制造、财务成本、报表分析模块化组合", "支持多租户 SaaS 与经营数据闭环"],
+    href: "/solutions",
+  },
 ]
 
 const KPIS = [
-  { label: "订单准时交付率", value: 96, color: "#E10A1F" },
-  { label: "库存周转率", value: 82, color: "#1C2230" },
-  { label: "应收回款率", value: 92, color: "#4A5468" },
-  { label: "月度结账及时率", value: 95, color: "#6E7889" },
-  { label: "单据审批时效", value: 88, color: "#98A1B2" }
+  { label: "订单准时交付率", value: 96, red: true },
+  { label: "月度结账及时率", value: 95 },
+  { label: "应收回款率", value: 92 },
+  { label: "单据审批时效", value: 88 },
+  { label: "库存周转率", value: 82 },
 ]
 
 const ADVANTAGES = [
@@ -46,195 +51,251 @@ const ADVANTAGES = [
   "多租户数据隔离与权限管控",
   "可配置的工作流审批引擎",
   "实时经营报表与成本分析",
-  "灵活的开放集成能力"
+  "灵活的开放集成能力",
 ]
-
-function SectionHeading({ eyebrow, title, desc }: { eyebrow: string; title: string; desc: string }) {
-  return (
-    <>
-      <div className="mb-4 flex flex-wrap items-baseline gap-3.5">
-        <span className="font-grotesk text-[12px] font-semibold tracking-[0.16em] text-[#E10A1F]">{eyebrow}</span>
-        <h2 className="m-0 text-[clamp(24px,3vw,30px)] font-semibold tracking-[-0.02em] text-[#11151E]">{title}</h2>
-      </div>
-      <p className="mb-9 mt-0 max-w-[640px] text-[14px] leading-[1.7] text-[#6E7889]">{desc}</p>
-    </>
-  )
-}
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white [font-family:'PingFang_SC',system-ui,sans-serif]">
-      {/* hero */}
-      <div className="mx-auto grid max-w-[1240px] grid-cols-[repeat(auto-fit,minmax(320px,1fr))] items-center gap-[clamp(32px,5vw,64px)] px-[clamp(16px,3vw,32px)] pb-[clamp(40px,6vw,72px)] pt-[clamp(48px,7vw,88px)]">
-        <div className="flex flex-col gap-[22px]">
-          <span className="font-grotesk text-[12px] font-semibold tracking-[0.16em] text-[#E10A1F]">
-            COLLABORATIVE MANUFACTURING CLOUD
-          </span>
-          <h1 className="m-0 text-pretty text-[clamp(32px,4.5vw,52px)] font-semibold leading-[1.15] tracking-[-0.02em] text-[#11151E]">
-            一体化协同制造管理
-            <br />
-            让经营尽在掌握
-          </h1>
-          <p className="font-grotesk m-0 text-[clamp(14px,1.6vw,17px)] tracking-[-0.01em] text-[#6E7889]">
-            One platform from procurement to finance.
-          </p>
-          <p className="m-0 max-w-[520px] text-[15px] leading-[1.75] text-[#4A5468]">
-            借助领跃（LeanLeap）协同制造管理系统，将采购、销售、生产、库存、财务、成本紧密连接，构建以数据驱动的一体化经营平台，持续提升协同效率与经营质量。
-          </p>
-          <div className="mt-1.5 flex flex-wrap gap-3">
-            <Link
-              href="/contact"
-              className="rounded-lg bg-[#E10A1F] px-[26px] py-[13px] text-[14px] font-semibold text-white no-underline transition-colors hover:bg-[#B00717]"
-            >
-              预约演示 Book a demo
-            </Link>
-            <Link
-              href="/products"
-              className="rounded-lg border border-[#C4CBD7] px-[26px] py-[13px] text-[14px] font-medium text-[#1C2230] no-underline transition-colors hover:border-[#98A1B2]"
-            >
-              了解产品 Explore
-            </Link>
+    <>
+      {/* ───────── HERO ───────── */}
+      <section className="relative overflow-hidden bg-paper pt-[calc(var(--header-h)+clamp(28px,5vw,72px))]">
+        <div aria-hidden className="grid-bg pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black_40%,transparent_92%)]" />
+        <GridPulse className="[mask-image:linear-gradient(to_bottom,black_40%,transparent_92%)]" />
+
+        <div className="wrap relative">
+          <Reveal variant="fade" delay={500} className="flex items-center justify-between gap-6">
+            <Tag>Collaborative Manufacturing Cloud</Tag>
+            <span className="eyebrow hidden text-mute sm:block">Shanghai, China</span>
+          </Reveal>
+
+          <Lines
+            as="h1"
+            delay={520}
+            className="display mt-[clamp(24px,3.2vw,48px)] text-[clamp(38px,10vw,196px)]"
+            lines={[
+              "一体化协同制造管理",
+              <span key="l2" className="flex items-baseline gap-[0.12em]">
+                让经营<span className="text-red">尽在掌握</span>
+              </span>,
+            ]}
+          />
+
+          <div className="mt-[clamp(28px,4vw,64px)] grid gap-x-10 gap-y-10 md:grid-cols-12">
+            <Reveal delay={900} className="md:col-span-4">
+              <ol className="flex flex-wrap items-center gap-x-2.5 gap-y-2 font-jbmono text-[12px] tracking-[0.06em] text-ink/70">
+                {CHAIN.map((step, i) => (
+                  <li key={step.key} className="flex items-center gap-2.5">
+                    <span>{step.zh}</span>
+                    {i < CHAIN.length - 1 && <Arrow size={10} className="text-red" />}
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-3 font-grotesk text-[14px] text-mute">One platform from procurement to finance.</p>
+            </Reveal>
+            <Reveal delay={980} className="md:col-span-7 md:col-start-6 lg:col-span-5 lg:col-start-8">
+              <p className="text-[clamp(16px,1.35vw,20px)] leading-[1.75] text-ink/85">
+                借助领跃（LeanLeap）协同制造管理系统，将采购、销售、生产、库存、财务、成本紧密连接，构建以数据驱动的一体化经营平台，持续提升协同效率与经营质量。
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Btn href="/contact" magnetic>
+                  预约演示
+                </Btn>
+                <Btn href="/products" variant="ghost">
+                  了解产品
+                </Btn>
+              </div>
+              <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+                {HERO_PILLS.map((pill) => (
+                  <li key={pill} className="flex items-center gap-2 text-[13px] text-mute">
+                    <span className="h-[5px] w-[5px] bg-red" />
+                    {pill}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
           </div>
-          <div className="mt-2.5 flex flex-wrap gap-2.5">
-            {HERO_PILLS.map((pill) => (
-              <span
-                key={pill}
-                className="inline-flex items-center gap-2 rounded-full border border-[#EDF0F6] bg-[#F7F9FC] px-3.5 py-[7px] text-[12px] text-[#4A5468]"
+        </div>
+
+        {/* 产品画面：随滚动由倾斜放平 */}
+        <ScrollScene className="relative mt-[clamp(48px,7vw,112px)]">
+          <div aria-hidden className="absolute inset-x-0 bottom-0 h-[46%] bg-ink" />
+          <div className="wrap relative [perspective:1800px]">
+            <Reveal variant="fade" delay={1100}>
+              <div
+                className="origin-top will-change-transform"
+                style={{
+                  ["--t" as string]: "clamp(0, calc(var(--p, 0) * 2.6), 1)",
+                  transform:
+                    "rotateX(calc((1 - var(--t)) * 16deg)) scale(calc(0.9 + var(--t) * 0.1))",
+                }}
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#E10A1F]" />
-                {pill}
-              </span>
+                <ShotFrame
+                  src="/shots/workbench.jpg"
+                  alt="领跃协同制造管理系统工作台界面"
+                  label="leanleap.app — 工作台"
+                  priority
+                />
+              </div>
+            </Reveal>
+          </div>
+        </ScrollScene>
+      </section>
+
+      {/* ───────── 一条链 ───────── */}
+      <section className="relative bg-ink text-paper">
+        <div aria-hidden className="grid-bg on-dark pointer-events-none absolute inset-0" />
+        <div className="relative pt-[clamp(72px,10vw,160px)]">
+          <Marquee
+            duration={48}
+            className="border-y border-white/12 py-[clamp(14px,1.6vw,24px)]"
+            itemClassName="font-display text-[clamp(40px,6.6vw,120px)] font-black leading-none tracking-[-0.04em]"
+            items={CHAIN.flatMap((step, i) => [
+              <span key={step.key} className={i % 2 ? "outline-text text-paper" : "text-paper"}>
+                {step.zh}
+              </span>,
+              <span key={`${step.key}-sep`} className="mx-[0.35em] inline-block h-[0.14em] w-[0.7em] bg-red" />,
+            ])}
+          />
+          <div className="wrap pb-[clamp(40px,5vw,72px)] pt-[clamp(56px,8vw,128px)]">
+            <SectionHead
+              index="01"
+              eyebrow="The chain"
+              onDark
+              lines={["六个环节，", "连成一条链"]}
+              desc="从一张采购合同到一份成本报表，业务单据在同一数据底座上逐级流转。每一步都可追溯，每一笔都对得上。"
+            />
+          </div>
+          <ChainScrolly />
+        </div>
+      </section>
+
+      {/* ───────── 数字 ───────── */}
+      <section className="bg-paper">
+        <div className="wrap py-[clamp(72px,10vw,160px)]">
+          <SectionHead index="02" eyebrow="By the numbers" lines={["二十年行业经验，", "沉淀为一套系统"]} />
+          <div className="hairgrid mt-[clamp(40px,6vw,96px)] grid-cols-2 lg:grid-cols-4">
+            {STATS.map((stat, i) => (
+              <Reveal
+                key={stat.caption}
+                delay={i * 90}
+                className="flex flex-col justify-between gap-[clamp(40px,6vw,104px)] p-[clamp(18px,2.2vw,36px)]"
+              >
+                <span className="eyebrow text-mute">{stat.caption}</span>
+                <div>
+                  <div className={`num text-[clamp(56px,8.6vw,164px)] leading-[0.9] ${stat.red ? "text-red" : ""}`}>
+                    <Counter value={stat.value} />
+                    <span className="text-[0.5em] tracking-normal">{stat.suffix}</span>
+                  </div>
+                  <div className="mt-4 text-[clamp(14px,1.1vw,17px)] font-medium">{stat.label}</div>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
+      </section>
 
-        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[#E2E7EF] bg-[#E2E7EF]">
-          {HERO_STATS.map((stat) => (
-            <div
-              key={stat.caption}
-              className={`flex flex-col gap-1.5 px-[clamp(16px,2vw,24px)] py-[clamp(18px,2.5vw,28px)] ${stat.tinted ? "bg-[#F7F9FC]" : "bg-white"}`}
-            >
-              <span
-                className={`font-jbmono text-[clamp(24px,3vw,34px)] font-semibold ${stat.red ? "text-[#E10A1F]" : "text-[#11151E]"}`}
-              >
-                {stat.value}
-                {stat.unit && <span className="text-[0.6em]">{stat.unit}</span>}
-              </span>
-              <span className="text-[13px] text-[#1C2230]">{stat.label}</span>
-              <span className="font-grotesk text-[11px] tracking-[0.08em] text-[#98A1B2]">{stat.caption}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* services */}
-      <div className="border-t border-[#E2E7EF] bg-[#F4F6FA]">
-        <div className="mx-auto max-w-[1240px] px-[clamp(16px,3vw,32px)] py-[clamp(48px,6vw,72px)]">
-          <SectionHeading
-            eyebrow="PRODUCTS & SERVICES"
-            title="产品与服务"
+      {/* ───────── 产品与服务 ───────── */}
+      <section className="bg-paper">
+        <div className="wrap pb-[clamp(72px,10vw,160px)]">
+          <SectionHead
+            index="03"
+            eyebrow="Products & services"
+            lines={["产品与服务"]}
             desc="沿袭制造行业管理最佳实践，提供从方案咨询到落地运维的一体化服务体系，帮助制造企业快速完成数字化升级。"
           />
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5">
+          <div className="mt-[clamp(40px,6vw,96px)]">
             {SERVICES.map((service) => (
-              <div key={service.no} className="flex flex-col gap-3 rounded-xl border border-[#E2E7EF] bg-white p-7">
-                <span className="font-jbmono text-[12px] text-[#98A1B2]">{service.no}</span>
-                <span className="text-[17px] font-semibold leading-[1.4] text-[#11151E]">{service.title}</span>
-                <p className="m-0 text-[13px] leading-[1.7] text-[#6E7889]">{service.description}</p>
-                <div className="mt-1 flex flex-col gap-2">
-                  {service.points.map((point) => (
-                    <span key={point} className="flex gap-2 text-[13px] text-[#4A5468]">
-                      <span className="shrink-0 text-[#E10A1F]">—</span>
-                      {point}
+              <Reveal key={service.no}>
+                <Link
+                  href={service.href}
+                  className="flip-row group grid grid-cols-12 items-start gap-x-6 gap-y-4 border-t border-line px-[clamp(0px,1.2vw,20px)] py-[clamp(24px,3vw,48px)] last:border-b"
+                >
+                  <span className="eyebrow col-span-12 text-red md:col-span-1 md:pt-3">{service.no}</span>
+                  <h3 className="title col-span-12 text-[clamp(24px,3vw,48px)] md:col-span-6">{service.title}</h3>
+                  <div className="col-span-10 md:col-span-4">
+                    <p className="flip-mute text-[15px] leading-[1.75] text-mute">{service.description}</p>
+                    <ul className="mt-4 flex flex-col gap-2">
+                      {service.points.map((point) => (
+                        <li key={point} className="flex gap-2.5 text-[14px] leading-[1.6]">
+                          <span className="mt-[9px] h-[5px] w-[5px] shrink-0 bg-red" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <span className="col-span-2 flex justify-end md:col-span-1 md:pt-2">
+                    <span className="grid h-11 w-11 place-items-center rounded-full border border-current transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-hover:-rotate-45">
+                      <Arrow />
                     </span>
-                  ))}
-                </div>
-              </div>
+                  </span>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* KPI + advantages */}
-      <div className="border-t border-[#E2E7EF] bg-white">
-        <div className="mx-auto max-w-[1240px] px-[clamp(16px,3vw,32px)] py-[clamp(48px,6vw,72px)]">
-          <SectionHeading
-            eyebrow="LIVE OPERATIONS"
-            title="实时经营指标"
+      {/* ───────── 经营指标 ───────── */}
+      <section className="bg-paper-2">
+        <div className="wrap py-[clamp(72px,10vw,160px)]">
+          <SectionHead
+            index="04"
+            eyebrow="Live operations"
+            lines={["实时经营指标"]}
             desc="将采购、生产、库存、财务与成本指标统一到同一数据底座，以数据驱动的方式持续优化经营决策。"
           />
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-5">
-            <div className="flex flex-col gap-5 rounded-xl border border-[#E2E7EF] p-7">
-              <div className="flex flex-col gap-1">
-                <span className="text-[15px] font-semibold text-[#11151E]">核心 KPI 指标</span>
-                <span className="text-[12px] text-[#98A1B2]">结合业务单据与实时数据，形成面向经营的指标体系</span>
+          <div className="mt-[clamp(40px,6vw,96px)] grid gap-x-10 gap-y-16 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <div className="mb-6 flex items-baseline justify-between">
+                <span className="text-[15px] font-semibold">核心 KPI 指标</span>
+                <span className="eyebrow text-mute">KPI / %</span>
               </div>
-              <div className="flex flex-col gap-3.5">
-                {KPIS.map((kpi) => (
-                  <div key={kpi.label} className="flex flex-col gap-1.5">
-                    <div className="flex justify-between text-[12px]">
-                      <span className="text-[#4A5468]">{kpi.label}</span>
-                      <span className="font-jbmono font-semibold text-[#11151E]">{kpi.value}%</span>
-                    </div>
-                    <div className="h-1.5 rounded-[3px] bg-[#EDF0F6]">
-                      <div
-                        className="h-1.5 rounded-[3px]"
-                        style={{ width: `${kpi.value}%`, background: kpi.color }}
-                      />
-                    </div>
+              {KPIS.map((kpi, i) => (
+                <Reveal key={kpi.label} delay={i * 70} className="border-t border-line py-[clamp(14px,1.6vw,22px)] last:border-b">
+                  <div className="flex items-end justify-between gap-6">
+                    <span className="text-[clamp(15px,1.3vw,19px)]">{kpi.label}</span>
+                    <span className={`num text-[clamp(32px,4vw,64px)] leading-none ${kpi.red ? "text-red" : ""}`}>
+                      <Counter value={kpi.value} duration={1400} />
+                      <span className="text-[0.5em]">%</span>
+                    </span>
                   </div>
-                ))}
-              </div>
+                  <div className="mt-4 h-[3px] w-full bg-ink/10">
+                    <Grow
+                      delay={200 + i * 70}
+                      className={`h-full ${kpi.red ? "bg-red" : "bg-ink"}`}
+                      style={{ width: `${kpi.value}%` }}
+                    />
+                  </div>
+                </Reveal>
+              ))}
             </div>
-
-            <div className="flex flex-col gap-5 rounded-xl border border-[#E2E7EF] bg-[#F7F9FC] p-7">
-              <div className="flex flex-col gap-1">
-                <span className="text-[15px] font-semibold text-[#11151E]">平台优势</span>
-                <span className="text-[12px] text-[#98A1B2]">沉淀制造企业管理最佳实践，全面覆盖经营全景</span>
+            <div className="lg:col-span-4 lg:col-start-9">
+              <div className="mb-6 flex items-baseline justify-between">
+                <span className="text-[15px] font-semibold">平台优势</span>
+                <span className="eyebrow text-mute">Advantages</span>
               </div>
-              <div className="flex flex-col">
-                {ADVANTAGES.map((advantage, i) => (
-                  <div
-                    key={advantage}
-                    className={`flex items-baseline gap-3 py-[13px] ${i < ADVANTAGES.length - 1 ? "border-b border-[#EDF0F6]" : ""}`}
-                  >
-                    <span className="font-jbmono text-[11px] text-[#E10A1F]">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="text-[13px] text-[#1C2230]">{advantage}</span>
-                  </div>
-                ))}
-              </div>
+              <Rule className="!opacity-100 !bg-ink" />
+              {ADVANTAGES.map((advantage, i) => (
+                <Reveal
+                  key={advantage}
+                  delay={i * 70}
+                  className="flex items-baseline gap-5 border-b border-line py-[clamp(16px,1.8vw,24px)]"
+                >
+                  <span className="eyebrow text-red">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-[clamp(16px,1.4vw,21px)] font-medium">{advantage}</span>
+                </Reveal>
+              ))}
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* CTA */}
-      <div className="bg-[#11151E]">
-        <div className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-6 px-[clamp(16px,3vw,32px)] py-[clamp(40px,5vw,56px)]">
-          <div className="flex flex-col gap-2">
-            <h2 className="m-0 text-[clamp(20px,2.6vw,26px)] font-semibold tracking-[-0.02em] text-[#F6F8FC]">
-              开启您的协同制造管理升级
-            </h2>
-            <span className="font-grotesk text-[13px] text-[#8B95A8]">
-              Tailored demo for your industry — talk to a consultant.
-            </span>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/contact"
-              className="rounded-lg bg-[#E10A1F] px-[26px] py-[13px] text-[14px] font-semibold text-white no-underline transition-colors hover:bg-[#B00717]"
-            >
-              联系顾问 Contact us
-            </Link>
-            <Link
-              href="/pricing"
-              className="rounded-lg border border-[#39414F] px-[26px] py-[13px] text-[14px] font-medium text-[#DBE1EC] no-underline transition-colors hover:border-[#6B7589]"
-            >
-              查看价格 Pricing
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
+      {/* ───────── 产品实景 ───────── */}
+      <section className="relative bg-ink py-[clamp(72px,8vw,120px)] text-paper lg:py-0">
+        <Gallery />
+      </section>
+
+      <CtaBand />
+    </>
   )
 }

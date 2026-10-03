@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Space_Grotesk, JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { siteConfig } from "@/lib/site-config";
+import { SmoothScroll } from "@/components/site/motion";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +25,14 @@ const spaceGrotesk = Space_Grotesk({
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+});
+
+// 中文展示字体：仅标题使用（700/900），按 unicode-range 分片按需加载
+const notoSansSC = Noto_Sans_SC({
+  variable: "--font-noto-sc",
+  weight: ["700", "900"],
+  preload: false,
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -76,13 +85,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className="dark">
+    <html lang="zh-CN" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased min-h-screen bg-background text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${notoSansSC.variable} antialiased min-h-screen`}
       >
+        <SmoothScroll />
+        <a
+          href="#main"
+          className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-full bg-ink px-5 py-3 text-[13px] text-paper transition-transform focus:translate-y-0"
+        >
+          跳到正文
+        </a>
         <div className="relative flex min-h-screen flex-col">
           <Header />
-          <main className="flex-1">{children}</main>
+          <main id="main" className="flex-1">{children}</main>
           <Footer />
         </div>
       </body>

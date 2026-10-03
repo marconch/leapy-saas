@@ -1,0 +1,58 @@
+// 「一条链」：采购 → 销售 → 生产 → 库存 → 财务 → 成本
+export const CHAIN = [
+  {
+    key: "procurement",
+    zh: "采购",
+    en: "Procurement",
+    desc: "采购合同、订单与入库全程在线，MRP 运算直接给出采购建议，供应商协同高效透明。",
+    points: ["采购合同 / 订单 / 入库", "MRP 运算与采购建议", "供应商协同"],
+    shot: "/shots/procurement.jpg",
+    label: "MRP 运算详情",
+  },
+  {
+    key: "sales",
+    zh: "销售",
+    en: "Sales",
+    desc: "贯通销售订单、出库与发票，订单履约进度一目了然。",
+    points: ["销售订单 / 出库 / 发票", "订单履约跟踪", "客户往来清晰可查"],
+    shot: "/shots/sales.jpg",
+    label: "销售订单",
+  },
+  {
+    key: "manufacturing",
+    zh: "生产",
+    en: "Manufacturing",
+    desc: "生产工单、BOM 与工艺路线，从排产、派工到质检，制造过程协同可控。",
+    points: ["生产工单管理", "BOM 与工艺路线", "派工、报工与质检"],
+    shot: "/shots/manufacturing.jpg",
+    label: "生产工单",
+  },
+  {
+    key: "inventory",
+    zh: "库存",
+    en: "Inventory",
+    desc: "多仓库存、移库与盘点，出入库与业务单据联动，库存数据实时准确。",
+    points: ["库存与 WMS 管理", "移库与盘点", "出入库单据联动"],
+    shot: "/shots/inventory.jpg",
+    label: "产成品入库单",
+  },
+  {
+    key: "finance",
+    zh: "财务",
+    en: "Finance",
+    desc: "应收应付、收付款与凭证，业务单据驱动财务，业财一体自动对账。",
+    points: ["应收应付管理", "收付款与对账", "凭证管理"],
+    shot: "/shots/finance.jpg",
+    label: "应收单",
+  },
+  {
+    key: "costing",
+    zh: "成本",
+    en: "Costing",
+    desc: "成本核算与存货月结，实时掌握成本构成与变化。",
+    points: ["成本核算", "存货月结", "成本构成分析"],
+    shot: "/shots/costing.jpg",
+    label: "存货月结",
+  },
+]
+
