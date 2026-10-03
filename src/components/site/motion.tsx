@@ -11,10 +11,16 @@ export function SmoothScroll() {
 
   React.useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-    const lenis = new Lenis({ autoRaf: true, anchors: true, lerp: 0.11 })
-    lenisRef.current = lenis
+    // 空闲时再初始化，避免与首屏水合争抢主线程
+    let lenis: Lenis | null = null
+    const start = () => {
+      lenis = new Lenis({ autoRaf: true, anchors: true, lerp: 0.11 })
+      lenisRef.current = lenis
+    }
+    const timer = window.setTimeout(start, 600)
     return () => {
-      lenis.destroy()
+      window.clearTimeout(timer)
+      lenis?.destroy()
       lenisRef.current = null
     }
   }, [])
@@ -44,15 +50,15 @@ function getIO() {
   return sharedIO
 }
 
-function useInView<T extends HTMLElement>() {
+function useInView<T extends HTMLElement>(enabled = true) {
   const ref = React.useRef<T>(null)
   React.useEffect(() => {
     const el = ref.current
-    if (!el) return
+    if (!el || !enabled) return
     const io = getIO()
     io.observe(el)
     return () => io.unobserve(el)
-  }, [])
+  }, [enabled])
   return ref
 }
 
@@ -64,15 +70,26 @@ type RevealProps = {
   style?: React.CSSProperties
   children?: React.ReactNode
   id?: string
+  /** 首屏元素：不等 JS，首次绘制即可见（CSS 关键帧位移进场） */
+  eager?: boolean
 }
 
-export function Reveal({ as: Tag = "div", variant = "up", delay = 0, className, style, children, id }: RevealProps) {
-  const ref = useInView<HTMLElement>()
+export function Reveal({
+  as: Tag = "div",
+  variant = "up",
+  delay = 0,
+  className,
+  style,
+  children,
+  id,
+  eager = false,
+}: RevealProps) {
+  const ref = useInView<HTMLElement>(!eager)
   return (
     <Tag
       ref={ref}
       id={id}
-      data-reveal={variant}
+      {...(eager ? (variant === "up" ? { "data-eager": "" } : {}) : { "data-reveal": variant })}
       className={className}
       style={{ ...style, ["--d" as string]: `${delay}ms` }}
     >
@@ -87,15 +104,17 @@ export function Lines({
   lines,
   className,
   delay = 0,
+  eager = false,
 }: {
   as?: React.ElementType
   lines: React.ReactNode[]
   className?: string
   delay?: number
+  eager?: boolean
 }) {
-  const ref = useInView<HTMLElement>()
+  const ref = useInView<HTMLElement>(!eager)
   return (
-    <Tag ref={ref} data-lines className={className} style={{ ["--d" as string]: `${delay}ms` }}>
+    <Tag ref={ref} {...(eager ? { "data-lines-eager": "" } : { "data-lines": "" })} className={className} style={{ ["--d" as string]: `${delay}ms` }}>
       {lines.map((line, i) => (
         <span key={i} className="line-mask" style={{ ["--i" as string]: i }}>
           <span>{line}</span>
@@ -354,12 +373,143 @@ export function GridPulse({ cell = 80, className = "" }: { cell?: number; classN
     const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting))
     io.observe(canvas)
     window.addEventListener("resize", resize)
-    raf = requestAnimationFrame(tick)
+    // 延后启动，把首屏主线程让给水合
+    const timer = window.setTimeout(() => (raf = requestAnimationFrame(tick)), 1400)
     return () => {
+      window.clearTimeout(timer)
       cancelAnimationFrame(raf)
       io.disconnect()
       window.removeEventListener("resize", resize)
     }
   }, [cell])
   return <canvas ref={ref} aria-hidden className={`pointer-events-none absolute inset-0 h-full w-full ${className}`} />
+}
+
+/* ───────── 截图图片：接近视口才开始加载 ─────────
+   原生 loading="lazy" 的预取距离过大（移动端会一次拉取 5 张以上），这里自行把关。 */
+export function ShotImg({
+  src,
+  alt,
+  sizes,
+  priority = false,
+}: {
+  src: string
+  alt: string
+  sizes: string
+  priority?: boolean
+}) {
+  const ref = React.useRef<HTMLImageElement>(null)
+  const [near, setNear] = React.useState(priority)
+  React.useEffect(() => {
+    const el = ref.current
+    if (!el || near) return
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setNear(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: "500px 300px" },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [near])
+  const srcSet = `${src.replace(/\.jpg$/, "-960.jpg")} 960w, ${src} 1760w`
+  return (
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        ref={ref}
+        src={near ? src : undefined}
+        srcSet={near ? srcSet : undefined}
+        sizes={sizes}
+        alt={alt}
+        width={1760}
+        height={990}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+        decoding="async"
+        className="block aspect-[16/9] h-auto w-full"
+      />
+      {!priority && (
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={src} alt={alt} width={1760} height={990} className="block h-auto w-full" />
+        </noscript>
+      )}
+    </>
+  )
+}
+
+/* ───────── 光标跟随器 ─────────
+   链接/按钮上放大成半透明圆；带 data-cursor="文字" 的元素上显示标签。原生光标保留。 */
+export function CursorFollower() {
+  const ref = React.useRef<HTMLDivElement>(null)
+  const labelRef = React.useRef<HTMLSpanElement>(null)
+  React.useEffect(() => {
+    const el = ref.current
+    const label = labelRef.current
+    if (!el || !label) return
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    let x = 0
+    let y = 0
+    let tx = 0
+    let ty = 0
+    let raf = 0
+    const tick = () => {
+      x += (tx - x) * 0.2
+      y += (ty - y) * 0.2
+      el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.2 ? requestAnimationFrame(tick) : 0
+    }
+    const setMode = (target: Element | null) => {
+      const labelled = target?.closest?.("[data-cursor]")
+      if (labelled) {
+        label.textContent = labelled.getAttribute("data-cursor")
+        el.dataset.mode = "label"
+      } else if (target?.closest?.("a, button, [role=button], input, textarea, select, label")) {
+        el.dataset.mode = "link"
+      } else {
+        el.dataset.mode = "dot"
+      }
+    }
+    const move = (e: PointerEvent) => {
+      tx = e.clientX
+      ty = e.clientY
+      if (!el.hasAttribute("data-on")) {
+        x = tx
+        y = ty
+        el.setAttribute("data-on", "")
+      }
+      setMode(e.target as Element | null)
+      if (!raf) raf = requestAnimationFrame(tick)
+    }
+    // 滚动时指针下的元素会变，重新判定
+    let scrollTimer = 0
+    const onScroll = () => {
+      if (scrollTimer) return
+      scrollTimer = window.setTimeout(() => {
+        scrollTimer = 0
+        if (el.hasAttribute("data-on")) setMode(document.elementFromPoint(tx, ty))
+      }, 120)
+    }
+    const leave = () => el.removeAttribute("data-on")
+    window.addEventListener("pointermove", move, { passive: true })
+    window.addEventListener("scroll", onScroll, { passive: true })
+    document.documentElement.addEventListener("pointerleave", leave)
+    return () => {
+      window.clearTimeout(scrollTimer)
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("pointermove", move)
+      document.documentElement.removeEventListener("pointerleave", leave)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+  return (
+    <div ref={ref} aria-hidden className="cursor-follower">
+      <span ref={labelRef} />
+    </div>
+  )
 }

@@ -74,7 +74,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:col-span-8 md:grid-cols-4">
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.caption} className="flex flex-col gap-3.5">
-              <span className="eyebrow mb-1.5 text-white/40">{col.caption}</span>
+              <span className="eyebrow mb-1.5 text-white/65">{col.caption}</span>
               {col.links.map((link) => (
                 <Link
                   key={link.label}
@@ -99,7 +99,7 @@ export function Footer() {
       </Reveal>
 
       <div className="mt-[clamp(20px,3vw,48px)] border-t border-line-d">
-        <div className="wrap flex flex-wrap items-center justify-between gap-3 py-5 text-[12px] text-white/45">
+        <div className="wrap flex flex-wrap items-center justify-between gap-3 py-5 text-[12px] text-white/65">
           <span>
             © 2026 {siteConfig.creator} ·{" "}
             <a

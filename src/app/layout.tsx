@@ -1,23 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Space_Grotesk, JetBrains_Mono } from "next/font/google";
-import localFont from "next/font/local";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { siteConfig } from "@/lib/site-config";
-import { SmoothScroll } from "@/components/site/motion";
+import { CursorFollower, SmoothScroll } from "@/components/site/motion";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-// Portal design 品牌字体：英文标签 Space Grotesk、数字 JetBrains Mono、中文走 PingFang SC 系统栈
+// 英文与数字：Space Grotesk（预加载）；小标签：JetBrains Mono（不预加载，swap）
+// 中文标题：自托管 Noto Sans SC 子集，见 src/app/fonts.css（scripts/subset-font.py 生成）
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
@@ -26,15 +16,7 @@ const spaceGrotesk = Space_Grotesk({
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-});
-
-// 中文展示字体：Noto Sans SC（OFL）可变字重 700–900 的自托管子集，仅含站内出现的字符。
-// 文案改动后用 scripts/subset-font.sh 重新生成；子集外的字符回退到系统字体。
-const notoSansSC = localFont({
-  src: "../fonts/NotoSansSC-display.woff",
-  variable: "--font-noto-sc",
-  weight: "700 900",
-  display: "swap",
+  weight: ["500"],
   preload: false,
 });
 
@@ -93,9 +75,10 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${notoSansSC.variable} antialiased min-h-screen`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased min-h-screen`}
       >
         <SmoothScroll />
+        <CursorFollower />
         <a
           href="#main"
           className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-full bg-ink px-5 py-3 text-[13px] text-paper transition-transform focus:translate-y-0"

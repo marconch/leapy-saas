@@ -1,7 +1,6 @@
 import * as React from "react"
 import Link from "next/link"
-import Image from "next/image"
-import { Lines, Magnetic, Reveal, Rule } from "./motion"
+import { Lines, Magnetic, Reveal, Rule, ShotImg } from "./motion"
 
 /* ───────── 箭头 ───────── */
 export function Arrow({ className = "", size = 14 }: { className?: string; size?: number }) {
@@ -105,19 +104,20 @@ export function PageHero({
     <section className="relative overflow-hidden bg-paper pt-[calc(var(--header-h)+clamp(48px,9vw,128px))]">
       <div aria-hidden className="grid-bg pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
       <div className="wrap relative">
-        <Reveal variant="fade" className="flex items-center justify-between gap-6">
+        <Reveal eager variant="fade" className="flex items-center justify-between gap-6">
           <Tag index={index}>{eyebrow}</Tag>
           <span className="eyebrow hidden text-mute sm:block">LeanLeap® — 领跃协同制造</span>
         </Reveal>
         <Lines
           as="h1"
           lines={lines}
-          delay={120}
+          eager
+          delay={380}
           className="display mt-[clamp(28px,4vw,56px)] text-[clamp(44px,9.2vw,168px)] text-balance"
         />
         <div className="mt-[clamp(32px,5vw,72px)] grid gap-10 pb-[clamp(40px,6vw,88px)] md:grid-cols-12">
           {desc && (
-            <Reveal delay={380} className="md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-8">
+            <Reveal eager delay={620} className="md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-8">
               <p className="text-[clamp(16px,1.35vw,20px)] leading-[1.75] text-ink/80">{desc}</p>
               {children && <div className="mt-8 flex flex-wrap gap-3">{children}</div>}
             </Reveal>
@@ -189,7 +189,9 @@ export function ShotFrame({
   priority = false,
   dark = false,
   className = "",
+  sizes = "(max-width: 1024px) 92vw, 60vw",
 }: {
+  sizes?: string
   src: string
   alt: string
   label?: string
@@ -208,18 +210,10 @@ export function ShotFrame({
         <span className={`h-2 w-2 rounded-full ${dark ? "bg-white/20" : "bg-ink/15"}`} />
         <span className={`h-2 w-2 rounded-full ${dark ? "bg-white/20" : "bg-ink/15"}`} />
         {label && (
-          <span className={`eyebrow ml-3 truncate !text-[10px] ${dark ? "text-white/50" : "text-mute"}`}>{label}</span>
+          <span className={`eyebrow ml-3 truncate !text-[10px] ${dark ? "text-white/65" : "text-mute"}`}>{label}</span>
         )}
       </div>
-      <Image
-        src={src}
-        alt={alt}
-        width={1760}
-        height={990}
-        priority={priority}
-        className="block h-auto w-full"
-        sizes="(max-width: 768px) 100vw, 80vw"
-      />
+      <ShotImg src={src} alt={alt} sizes={sizes} priority={priority} />
     </figure>
   )
 }

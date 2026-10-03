@@ -66,13 +66,13 @@ export function Header() {
         <div className="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
           <Link
             href="/"
-            aria-label="领跃 LeanLeap 首页"
             className={`relative z-[60] flex shrink-0 items-center gap-2.5 transition-colors duration-500 ${open ? "text-paper" : "text-ink"}`}
           >
             <Image src="/logo.svg" alt="" width={30} height={30} className="h-[30px] w-[30px]" priority />
             <span className="flex items-baseline gap-1.5">
               <span className="font-display text-[17px] font-bold">领跃</span>
               <span className="font-grotesk text-[15px] font-semibold tracking-[-0.02em]">LeanLeap</span>
+              <span className="sr-only">首页</span>
             </span>
           </Link>
 
@@ -150,7 +150,7 @@ export function Header() {
               className="group flex items-baseline justify-between gap-4 border-b border-white/12 py-[clamp(10px,1.9vh,18px)]"
             >
               <span className="flex items-baseline gap-4 overflow-hidden">
-                <span className="eyebrow w-6 text-white/40">{String(i + 1).padStart(2, "0")}</span>
+                <span className="eyebrow w-6 text-white/65">{String(i + 1).padStart(2, "0")}</span>
                 <span
                   className={`font-display text-[clamp(26px,7.4vw,44px)] font-bold tracking-[-0.03em] transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] ${
                     open ? "translate-y-0" : "translate-y-[120%]"
@@ -160,7 +160,7 @@ export function Header() {
                   {item.label}
                 </span>
               </span>
-              <span className="eyebrow text-white/40 transition-colors group-hover:text-red">{item.en}</span>
+              <span className="eyebrow text-white/65 transition-colors group-hover:text-red">{item.en}</span>
             </Link>
           ))}
         </nav>
@@ -168,7 +168,7 @@ export function Header() {
           <a href={siteConfig.loginUrl} tabIndex={open ? 0 : -1} className="btn btn-ghost on-dark btn-sm">
             登录
           </a>
-          <span className="eyebrow text-white/40">{siteConfig.contact.email}</span>
+          <span className="eyebrow text-white/65">{siteConfig.contact.email}</span>
         </div>
       </div>
     </>

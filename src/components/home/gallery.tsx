@@ -64,14 +64,14 @@ export function Gallery() {
               <p className="max-w-[380px] text-[clamp(15px,1.15vw,18px)] leading-[1.8] text-mute-d">
                 以下画面均截取自领跃系统的演示环境，没有效果图，也没有概念稿。
               </p>
-              <span className="eyebrow mt-8 hidden items-center gap-3 text-white/40 lg:inline-flex">
+              <span className="eyebrow mt-8 hidden items-center gap-3 text-white/65 lg:inline-flex">
                 继续滚动
                 <span className="inline-block h-px w-12 bg-white/40" />
               </span>
             </Reveal>
           </div>
           {SHOTS.map((shot) => (
-            <figure key={shot.no} className="flex w-[86vw] shrink-0 snap-start flex-col gap-5 lg:w-[58vw]">
+            <figure key={shot.no} data-cursor="滚动" className="flex w-[86vw] shrink-0 snap-start flex-col gap-5 lg:w-[58vw]">
               <ShotFrame src={shot.src} alt={`领跃${shot.title}界面截图`} label={shot.title} dark={shot.dark} />
               <figcaption className="flex items-baseline gap-5 border-t border-white/15 pt-4">
                 <span className="eyebrow text-red">{shot.no}</span>

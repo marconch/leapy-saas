@@ -63,14 +63,15 @@ export default function Home() {
         <GridPulse className="[mask-image:linear-gradient(to_bottom,black_40%,transparent_92%)]" />
 
         <div className="wrap relative">
-          <Reveal variant="fade" delay={500} className="flex items-center justify-between gap-6">
+          <Reveal eager variant="fade" className="flex items-center justify-between gap-6">
             <Tag>Collaborative Manufacturing Cloud</Tag>
             <span className="eyebrow hidden text-mute sm:block">Shanghai, China</span>
           </Reveal>
 
           <Lines
             as="h1"
-            delay={520}
+            eager
+            delay={420}
             className="display mt-[clamp(24px,3.2vw,48px)] text-[clamp(38px,10vw,176px)]"
             lines={[
               "一体化协同制造管理",
@@ -81,7 +82,7 @@ export default function Home() {
           />
 
           <div className="mt-[clamp(28px,4vw,64px)] grid gap-x-10 gap-y-10 md:grid-cols-12">
-            <Reveal delay={900} className="md:col-span-4">
+            <Reveal eager delay={700} className="md:col-span-4">
               <ol className="flex flex-wrap items-center gap-x-2.5 gap-y-2 font-jbmono text-[12px] tracking-[0.06em] text-ink/70">
                 {CHAIN.map((step, i) => (
                   <li key={step.key} className="flex items-center gap-2.5">
@@ -98,7 +99,7 @@ export default function Home() {
                 <span className="eyebrow text-mute">Scroll</span>
               </div>
             </Reveal>
-            <Reveal delay={980} className="md:col-span-7 md:col-start-6 lg:col-span-5 lg:col-start-8">
+            <Reveal eager delay={780} className="md:col-span-7 md:col-start-6 lg:col-span-5 lg:col-start-8">
               <p className="text-[clamp(16px,1.35vw,20px)] leading-[1.75] text-ink/85">
                 借助领跃（LeanLeap）协同制造管理系统，将采购、销售、生产、库存、财务、成本紧密连接，构建以数据驱动的一体化经营平台，持续提升协同效率与经营质量。
               </p>
@@ -126,7 +127,7 @@ export default function Home() {
         <ScrollScene className="relative mt-[clamp(48px,7vw,112px)]">
           <div aria-hidden className="absolute inset-x-0 bottom-0 h-[46%] bg-ink" />
           <div className="wrap relative [perspective:1800px]">
-            <Reveal variant="fade" delay={1100}>
+            <Reveal eager variant="fade">
               <div
                 className="origin-top will-change-transform"
                 style={{
@@ -140,6 +141,7 @@ export default function Home() {
                   alt="领跃协同制造管理系统工作台界面"
                   label="leanleap.app — 工作台"
                   priority
+                  sizes="(max-width: 1680px) 92vw, 1568px"
                 />
               </div>
             </Reveal>

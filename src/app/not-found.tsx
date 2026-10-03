@@ -18,7 +18,7 @@ export default function NotFound() {
       <GridPulse className="[mask-image:linear-gradient(to_bottom,black_30%,transparent_95%)]" />
 
       <div className="wrap relative flex flex-1 flex-col pb-[clamp(40px,6vw,88px)]">
-        <Reveal variant="fade" className="flex items-center justify-between gap-6">
+        <Reveal eager variant="fade" className="flex items-center justify-between gap-6">
           <Tag index="—">Error 404</Tag>
           <span aria-hidden className="eyebrow hidden text-mute sm:block">
             Page not found
@@ -26,7 +26,7 @@ export default function NotFound() {
         </Reveal>
 
         {/* 巨型 404 */}
-        <Reveal variant="scale" delay={100} className="relative mt-[clamp(8px,2vw,24px)]">
+        <Reveal eager variant="scale" delay={100} className="relative mt-[clamp(8px,2vw,24px)]">
           <p
             aria-hidden
             className="num m-0 flex select-none items-end text-[clamp(150px,36vw,620px)] leading-[0.82] tracking-[-0.07em]"
@@ -39,7 +39,7 @@ export default function NotFound() {
         </Reveal>
 
         <div className="mt-[clamp(32px,5vw,72px)] grid gap-x-10 gap-y-12 md:grid-cols-12">
-          <Reveal delay={200} className="md:col-span-6">
+          <Reveal eager delay={200} className="md:col-span-6">
             <h1 className="title text-[clamp(32px,5.2vw,88px)]">页面未找到</h1>
             <p className="mt-5 max-w-[520px] text-[clamp(16px,1.35vw,20px)] leading-[1.75] text-ink/80">
               抱歉，您访问的页面不存在或已被移动。
@@ -61,7 +61,7 @@ export default function NotFound() {
             </div>
           </Reveal>
 
-          <Reveal delay={320} className="md:col-span-5 md:col-start-8">
+          <Reveal eager delay={320} className="md:col-span-5 md:col-start-8">
             <div className="mb-5 flex items-baseline justify-between">
               <h2 className="text-[15px] font-semibold">热门页面：</h2>
               <span aria-hidden className="eyebrow text-mute">

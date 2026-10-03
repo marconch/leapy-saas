@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./fonts.css";
 @import "./site.css" layer(components);
 
 @custom-variant dark (&:is(.dark *));
@@ -6,11 +7,11 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-space-grotesk), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --font-grotesk: var(--font-space-grotesk), "PingFang SC", "Microsoft YaHei", sans-serif;
   --font-jbmono: var(--font-jetbrains-mono), monospace;
-  --font-display: var(--font-space-grotesk), var(--font-noto-sc), "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-display: var(--font-space-grotesk), "LL Display SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -81,7 +82,6 @@
   }
   body {
     @apply bg-paper text-ink font-sans;
-    font-feature-settings: "ss01", "cv11";
     text-rendering: optimizeLegibility;
   }
   ::selection {
@@ -96,6 +96,22 @@
     color: inherit;
     text-decoration: none;
   }
+}
+
+/* 小号红色文字的对比度修正（品牌红 #E10A1F 在浅底 4.39:1、深底 3.9:1，均不足 AA 4.5:1） */
+.eyebrow.text-red,
+.eyebrow .text-red,
+.text-red.text-\[11px\],
+.text-red.text-\[12px\],
+.text-red.text-\[13px\] {
+  color: #d00a1c;
+}
+.bg-ink .eyebrow.text-red,
+.bg-ink .eyebrow .text-red,
+.bg-ink .text-red.text-\[11px\],
+.bg-ink .text-red.text-\[12px\],
+.bg-ink .text-red.text-\[13px\] {
+  color: #ff5263;
 }
 
 /* Lenis */
@@ -152,6 +168,32 @@ html.lenis body {
   transform: none;
 }
 
+/* 首屏标题：纯 CSS 关键帧（不依赖 JS、不用透明度，保证 LCP 在首次绘制即可计入） */
+@keyframes line-rise {
+  from {
+    transform: translate3d(0, 55%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+[data-lines-eager] .line-mask > span {
+  animation: line-rise 1.2s var(--ease-out-expo) both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--d, 0ms));
+}
+@keyframes eager-rise {
+  from {
+    transform: translate3d(0, 22px, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+[data-eager] {
+  animation: eager-rise 1.1s var(--ease-out-expo) both;
+  animation-delay: var(--d, 0ms);
+}
+
 /* 细线生长 */
 .js [data-rule] {
   transform: scaleX(0);
@@ -173,11 +215,68 @@ html.lenis body {
     transform: none !important;
     transition: none !important;
   }
+  [data-lines-eager] .line-mask > span,
+  [data-eager],
   .marquee-track,
   .page-in {
     animation: none !important;
   }
   .page-curtain {
+    display: none;
+  }
+}
+
+/* ───────── 光标跟随器（仅精确指针设备） ───────── */
+.cursor-follower {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 80;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 999px;
+  background: #e10a1f;
+  pointer-events: none;
+  opacity: 0;
+  display: grid;
+  place-items: center;
+  transition:
+    width 0.45s var(--ease-out-expo),
+    height 0.45s var(--ease-out-expo),
+    margin 0.45s var(--ease-out-expo),
+    opacity 0.3s ease,
+    background-color 0.3s ease;
+  will-change: transform;
+}
+.cursor-follower[data-on] {
+  opacity: 1;
+}
+.cursor-follower[data-mode="link"] {
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  background: rgba(225, 10, 31, 0.18);
+}
+.cursor-follower[data-mode="label"] {
+  width: 84px;
+  height: 84px;
+  margin: -42px 0 0 -42px;
+}
+.cursor-follower span {
+  font-family: var(--font-jbmono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  white-space: nowrap;
+}
+.cursor-follower[data-mode="label"] span {
+  opacity: 1;
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-follower {
     display: none;
   }
 }

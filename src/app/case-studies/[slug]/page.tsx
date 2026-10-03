@@ -96,7 +96,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       <section className="relative overflow-hidden bg-paper pt-[calc(var(--header-h)+clamp(40px,7vw,104px))]">
         <div aria-hidden className="grid-bg pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
         <div className="wrap relative">
-          <Reveal variant="fade">
+          <Reveal eager variant="fade">
             <nav aria-label="面包屑" className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-1 text-mute">
               <Link href="/" className="ulink">
                 首页
@@ -112,21 +112,21 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             </nav>
           </Reveal>
 
-          <Reveal variant="fade" delay={80} className="mt-[clamp(28px,4vw,56px)] flex flex-wrap items-center gap-x-5 gap-y-3">
+          <Reveal eager variant="fade" delay={80} className="mt-[clamp(28px,4vw,56px)] flex flex-wrap items-center gap-x-5 gap-y-3">
             <Tag index="05">{caseStudy.industry}</Tag>
             {caseStudy.featured && (
               <span className="bg-red px-2 py-1 text-[11px] font-semibold tracking-[0.08em] text-white">精选案例</span>
             )}
           </Reveal>
 
-          <Lines
+          <Lines eager
             as="h1"
             lines={[caseStudy.title]}
             delay={120}
             className="display mt-[clamp(20px,3vw,40px)] max-w-[14em] text-[clamp(36px,7.2vw,128px)] text-balance"
           />
 
-          <Reveal delay={380} className="mt-[clamp(28px,4vw,56px)] pb-[clamp(28px,4vw,56px)]">
+          <Reveal eager delay={380} className="mt-[clamp(28px,4vw,56px)] pb-[clamp(28px,4vw,56px)]">
             <p className="eyebrow text-mute">发布时间：{published}</p>
           </Reveal>
         </div>

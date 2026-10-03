@@ -37,7 +37,7 @@ export function ChainScrolly() {
                       }`}
                     />
                     <span
-                      className={`eyebrow transition-colors duration-500 ${i === active ? "text-paper" : "text-white/35"}`}
+                      className={`eyebrow transition-colors duration-500 ${i === active ? "text-paper" : "text-white/65"}`}
                     >
                       {String(i + 1).padStart(2, "0")} {step.zh}
                     </span>
@@ -87,7 +87,7 @@ export function ChainScrolly() {
               </div>
 
               {/* 截图 */}
-              <div className="relative col-span-8 aspect-[16/9.6] max-h-[68vh] justify-self-end w-full">
+              <div data-cursor="滚动" className="relative col-span-8 aspect-[16/9.6] max-h-[68vh] justify-self-end w-full">
                 {CHAIN.map((step, i) => {
                   const state = i === active ? "on" : i < active ? "past" : "next"
                   return (
