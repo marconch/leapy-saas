@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 
 const GROWTH_STATS = [
   { value: 50, suffix: "+", label: "服务客户", caption: "Clients", red: true },
-  { value: 20, suffix: "+", label: "团队成员", caption: "Team", red: false },
   { value: 8, suffix: "", label: "核心模块", caption: "Modules", red: false },
   { value: 20, suffix: "年", label: "行业经验", caption: "Years", red: false },
 ]
@@ -90,7 +89,7 @@ export default function AboutPage() {
       <section className="bg-paper">
         <div className={`wrap ${SECTION_PAD}`}>
           <SectionHead index="02" eyebrow="By the numbers" lines={["发展数据"]} />
-          <div className="hairgrid mt-[clamp(40px,6vw,96px)] grid-cols-2 lg:grid-cols-4">
+          <div className="hairgrid mt-[clamp(40px,6vw,96px)] grid-cols-1 sm:grid-cols-3">
             {GROWTH_STATS.map((stat, i) => (
               <Reveal
                 key={stat.label}
