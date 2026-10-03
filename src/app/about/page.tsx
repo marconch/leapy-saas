@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Counter, GridPulse, Reveal, Rule } from "@/components/site/motion"
+import { Counter, GridPulse, Reveal } from "@/components/site/motion"
 import { CtaBand, PageHero, SectionHead } from "@/components/site/ui"
 
 // 关于我们页 —— 品牌进化版（编辑式 / 图纸感）；文案与数据沿用原页
@@ -22,23 +22,6 @@ const VALUES = [
   { no: "02", title: "客户至上", desc: "深入理解客户需求，提供超预期的服务体验。" },
   { no: "03", title: "专业专注", desc: "专注制造业领域，打造专业的产品和服务。" },
   { no: "04", title: "合作共赢", desc: "与客户、合作伙伴携手共创美好未来。" },
-]
-
-const TEAM = [
-  { initial: "张", name: "张明", role: "创始人 & CEO", desc: "15 年制造业信息化经验，曾任知名制造企业 CIO。" },
-  { initial: "李", name: "李华", role: "技术总监", desc: "资深软件架构师，专注工业软件开发 10 余年。" },
-  { initial: "王", name: "王丽", role: "产品总监", desc: "深耕制造业务流程，产品设计经验丰富。" },
-  { initial: "刘", name: "刘强", role: "解决方案总监", desc: "制造业数字化转型专家，服务过众多知名企业。" },
-]
-
-const MILESTONES = [
-  { year: "2018", event: "公司成立，获得天使轮投资", red: true },
-  { year: "2019", event: "发布第一版协同制造管理云平台，服务首批客户", red: false },
-  { year: "2020", event: "完成 A 轮融资，团队扩展到 50 人", red: false },
-  { year: "2021", event: "服务客户突破 100 家，产品功能全面升级", red: false },
-  { year: "2022", event: "获得行业权威认证，开拓海外市场", red: false },
-  { year: "2023", event: "完成 B 轮融资，成立研发中心", red: false },
-  { year: "2024", event: "客户数量超过 500 家，成为行业领先品牌", red: true },
 ]
 
 const CAREERS = [
@@ -148,73 +131,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ───────── 核心团队 ───────── */}
-      <section className="bg-paper-2">
-        <div className={`wrap ${SECTION_PAD}`}>
-          <SectionHead index="04" eyebrow="Team" lines={["核心团队"]} />
-          <div className="hairgrid mt-[clamp(40px,6vw,96px)] grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {TEAM.map((member, i) => (
-              <Reveal
-                key={member.name}
-                delay={i * 90}
-                className="flex flex-col gap-[clamp(32px,4vw,72px)] !bg-paper-2 p-[clamp(20px,2.2vw,36px)]"
-              >
-                <div className="flex items-start justify-between">
-                  <span
-                    aria-hidden
-                    className="font-display text-[clamp(72px,8vw,136px)] font-black leading-[0.9] tracking-[-0.04em]"
-                  >
-                    {member.initial}
-                  </span>
-                  <span className="eyebrow text-mute">{String(i + 1).padStart(2, "0")}</span>
-                </div>
-                <div>
-                  <h3 className="title text-[clamp(22px,2vw,30px)]">{member.name}</h3>
-                  <p className="eyebrow mt-2 flex items-center gap-2 text-red">
-                    <span aria-hidden className="inline-block h-[5px] w-[5px] bg-red" />
-                    {member.role}
-                  </p>
-                  <p className="mt-5 text-[14px] leading-[1.75] text-mute">{member.desc}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ───────── 发展历程：大年份时间轴 ───────── */}
-      <section className="relative bg-ink text-paper">
-        <div aria-hidden className="grid-bg on-dark pointer-events-none absolute inset-0" />
-        <div className={`wrap relative ${SECTION_PAD}`}>
-          <SectionHead index="05" eyebrow="Milestones" onDark lines={["发展历程"]} />
-          <ol className="mt-[clamp(40px,6vw,96px)]">
-            {MILESTONES.map((m, i) => (
-              <Reveal as="li" key={m.year} delay={i * 50}>
-                <div className="flip-row grid grid-cols-12 items-end gap-x-6 gap-y-3 border-t border-white/12 px-[clamp(0px,1.2vw,20px)] py-[clamp(18px,2.2vw,36px)] [--flip-bg:var(--color-paper)] [--flip-fg:var(--color-ink)]">
-                  <span className="eyebrow flip-mute col-span-12 text-mute-d md:col-span-1 md:pb-[1.2em]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    className={`num col-span-12 text-[clamp(64px,10.5vw,184px)] leading-[0.86] md:col-span-6 ${m.red ? "text-red" : ""}`}
-                  >
-                    {m.year}
-                  </span>
-                  <p className="col-span-12 text-[clamp(16px,1.6vw,26px)] leading-[1.5] font-medium md:col-span-5 md:pb-[0.5em]">
-                    {m.event}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </ol>
-          <Rule className="!opacity-100 !bg-white/12" />
-        </div>
-      </section>
-
       {/* ───────── 加入我们 ───────── */}
-      <section id="careers" className="scroll-mt-28 bg-paper">
+      <section id="careers" className="scroll-mt-28 bg-paper-2">
         <div className={`wrap ${SECTION_PAD}`}>
           <SectionHead
-            index="06"
+            index="04"
             eyebrow="Careers"
             lines={["加入我们"]}
             desc="我们正在寻找有激情、有才华的伙伴加入团队，一起推动制造业的数字化变革。"

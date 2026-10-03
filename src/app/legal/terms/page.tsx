@@ -178,7 +178,7 @@ const SECTIONS: Section[] = [
     title: "联系信息",
     blocks: [
       { p: "如果您对本服务条款有任何疑问，请联系我们：" },
-      { ul: ["邮箱：legal@leapingtech.com", "电话：021-62095557", "地址：上海市浦东新区张江高科技园区"] },
+      { ul: ["邮箱：legal@leapingtech.com", "电话：021-62095557", "地址：上海市普陀区宁夏路201号"] },
     ],
   },
 ]
