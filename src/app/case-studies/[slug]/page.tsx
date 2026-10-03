@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { Counter, Lines, Reveal, Rule } from "@/components/site/motion"
+import { Lines, Reveal, Rule } from "@/components/site/motion"
 import { Arrow, Btn, CtaBand, SectionHead, ShotFrame, Tag } from "@/components/site/ui"
 import { getCaseStudyBySlug, getAllCaseStudies } from "@/lib/case-studies"
 
@@ -41,17 +41,6 @@ const PRODUCT_SHOTS: Record<string, { src: string; module: string }> = {
   "electronics-factory-smart-upgrade": { src: "/shots/manufacturing.jpg", module: "生产制造" },
   "machinery-manufacturer-efficiency-optimization": { src: "/shots/costing.jpg", module: "成本核算" },
   "chemical-plant-safety-digitalization": { src: "/shots/finance.jpg", module: "财务管理" },
-}
-
-function MetricValue({ value }: { value: string }) {
-  const m = value.match(/^(\d+)(.*)$/)
-  if (!m) return <span className="display text-[0.62em] leading-[1.2] tracking-[-0.02em]">{value}</span>
-  return (
-    <>
-      <Counter value={Number(m[1])} />
-      {m[2] && <span className="text-[0.5em] tracking-normal">{m[2]}</span>}
-    </>
-  )
 }
 
 function RowArrow() {
@@ -231,38 +220,13 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </div>
       </section>
 
-      {/* ───────── 关键指标：巨字宫格 ───────── */}
-      <section className="relative bg-ink text-paper">
-        <div aria-hidden className="grid-bg on-dark pointer-events-none absolute inset-0" />
-        <div className="wrap relative py-[clamp(72px,10vw,160px)]">
-          <SectionHead index="04" eyebrow="Key metrics" onDark lines={["关键指标"]} />
-          <div className="hairgrid on-dark mt-[clamp(40px,6vw,96px)] grid-cols-2 lg:grid-cols-4">
-            {caseStudy.metrics.map((metric, i) => (
-              <Reveal
-                key={metric.name}
-                delay={i * 90}
-                className="flex flex-col justify-between gap-[clamp(40px,6vw,104px)] p-[clamp(18px,2.2vw,36px)]"
-              >
-                <span className="eyebrow text-mute-d">{metric.improvement}</span>
-                <div>
-                  <div className={`num text-[clamp(52px,8vw,152px)] leading-[0.9] ${i === 0 ? "text-red" : ""}`}>
-                    <MetricValue value={metric.value} />
-                  </div>
-                  <div className="mt-4 text-[clamp(14px,1.1vw,17px)] font-medium">{metric.name}</div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ───────── 客户评价：大引言 ───────── */}
       {caseStudy.testimonial && (
         <section className="bg-paper-2">
           <div className="wrap grid gap-x-10 gap-y-8 py-[clamp(72px,10vw,160px)] md:grid-cols-12">
             <Reveal variant="fade" className="md:col-span-3">
               <h2>
-                <Tag index="05">客户评价</Tag>
+                <Tag index="04">客户评价</Tag>
               </h2>
             </Reveal>
             <figure className="md:col-span-9">
